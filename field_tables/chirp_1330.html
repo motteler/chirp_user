@@ -1,0 +1,278 @@
+<table border="1" class="dataframe t01">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Name</th>
+      <th>Type</th>
+      <th>Dimensions</th>
+      <th>Description</th>
+      <th>Units</th>
+      <th>Ancillary Variables</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>obs_id</td>
+      <td>string</td>
+      <td>obs</td>
+      <td>unique earth view observation identifier.</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>obs_time_tai93</td>
+      <td>double</td>
+      <td>obs</td>
+      <td>earth view observation midtime for each FOV</td>
+      <td>seconds since 1993-01-01 00:00</td>
+      <td>bnds</td>
+    </tr>
+    <tr>
+      <td>obs_time_utc</td>
+      <td>uint16</td>
+      <td>obs, utc_tuple</td>
+      <td>UTC earth view observation time as an array of integers: year, month, day, hour, minute, second, millisec, microsec</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>lat</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>latitude of FOV center</td>
+      <td>degrees_north</td>
+      <td>bnds</td>
+    </tr>
+    <tr>
+      <td>lon</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>longitude of FOV center</td>
+      <td>degrees_east</td>
+      <td>bnds</td>
+    </tr>
+    <tr>
+      <td>land_frac</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>land fraction over the FOV</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>surf_alt</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>mean surface altitude wrt  earth model over the FOV</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>surf_alt_sdev</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>standard deviation of surface altitude within the FOV</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sun_glint_lat</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>sun glint spot latitude at scan_mid_time.  Fill for night observations.</td>
+      <td>degrees_north</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sun_glint_lon</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>sun glint spot longitude at scan_mid_time.  Fill for night observations.</td>
+      <td>degrees_east</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sol_zen</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>solar zenith angle at the center of the FOV</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sol_azi</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>solar azimuth angle at the center of the FOV (clockwise from North)</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sun_glint_dist</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>Distance from the center of the calculated sun glint spot to the center of the spot.  Note that there may not be a glint for cloudy or land cases and in ocean cases the glint can move based on wind conditions.  Fill for night observations.</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>view_ang</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>off nadir pointing angle</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sat_zen</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>satellite zenith angle at the center of the FOV</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sat_azi</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>satellite azimuth angle at the center of the FOV (clockwise from North)</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sat_range</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>line of sight distance between satellite and FOV center</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>asc_flag</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>ascending orbit flag: 1 if ascending, 0 descending</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>subsat_lat</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>sub-satellite latitude at scan_mid_time</td>
+      <td>degrees_north</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>subsat_lon</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>sub-satellite longitude at scan_mid_time</td>
+      <td>degrees_east</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>scan_mid_time</td>
+      <td>double</td>
+      <td>obs</td>
+      <td>TAI93 at  middle of earth scene scans</td>
+      <td>seconds since 1993-01-01 00:00</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sat_alt</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>satellite altitude with respect to earth model at scan_mid_time</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>local_solar_time</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>local apparent solar time in hours from midnight</td>
+      <td>hours</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>utc_tuple_lbl</td>
+      <td>string</td>
+      <td>utc_tuple</td>
+      <td>names of the elements of UTC when it is expressed as an array of integers year,month,day,hour,minute,second,millisecond,microsecond</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>rad</td>
+      <td>float32</td>
+      <td>obs, wnum</td>
+      <td>spectral radiance</td>
+      <td>mW/(m2 sr cm-1)</td>
+      <td>err, qc</td>
+    </tr>
+    <tr>
+      <td>synth_frac</td>
+      <td>float32</td>
+      <td>wnum</td>
+      <td>File mean fraction of signal that is attributed to synthesized AIRS Level-1C values</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>nedn</td>
+      <td>float32</td>
+      <td>fov, wnum</td>
+      <td>noise equivalent differential radiance</td>
+      <td>mW/(m2 sr cm-1)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>atrack</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>Along-track index of Field Of Regard</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>xtrack</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>Cross-track index of Field Of Regard</td>
+      <td>unitless</td>
+      <td>bnds</td>
+    </tr>
+    <tr>
+      <td>fov_num</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>Field Of View number in FOR</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>airs_atrack</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>AIRS-like along-track index of Field Of View</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>airs_xtrack</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>AIRS-like cross-track index of Field Of View</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>wnum</td>
+      <td>float64</td>
+      <td>wnum</td>
+      <td>wavenumber</td>
+      <td>cm-1</td>
+      <td>bnds</td>
+    </tr>
+  </tbody>
+</table>

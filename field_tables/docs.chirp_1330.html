@@ -1,0 +1,1005 @@
+
+<html>
+<head>
+<style>
+table {
+  width:100%;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-family: Cambria;
+}
+th, td {
+  padding: 7px;
+  text-align: left;
+}
+.t01 tbody tr:nth-child(even) {
+  background-color: #eee;
+}
+.t01 tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+.t01 tbody td:first-child {
+  font-weight: bold
+}
+th {
+  background-color: lightblue;
+  color: black;
+}
+</style>
+<title>CHIRP 1330 Interface Specification</title>
+</head>
+
+<body bgcolor="#ffffff" text="#000000" vlink=555555 link=000080 font face="Cambria">
+<center>
+<FONT COLOR="#000080" SIZE=-1 face="Cambria">
+<H1>CHIRP 1330 Interface Specification</H1>
+</center>
+
+<p><center>Interface Specification Version 02.02.07</center></p>
+<p><center>12-17-2020</center></p>
+
+            <center>
+    <FONT COLOR="#000080" SIZE=1 face="Cambria">
+        <H2>Global Groups</H2>
+    </center>
+    <table border="1" class="dataframe t01">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Path</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/</td>
+      <td>User data</td>
+    </tr>
+  </tbody>
+</table>
+
+            <center>
+    <FONT COLOR="#000080" SIZE=1 face="Cambria">
+        <H2>Global Dimensions</H2>
+    </center>
+    <table border="1" class="dataframe t01">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Name</th>
+      <th>Size</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fov</td>
+      <td>9</td>
+      <td>Field-of-view dimension</td>
+    </tr>
+    <tr>
+      <td>obs</td>
+      <td>12,150</td>
+      <td>number of spectra in 6-minute L1 CHIRP for the 13:30 orbit. 135*90 or 45*30*9</td>
+    </tr>
+    <tr>
+      <td>wnum</td>
+      <td>1,679</td>
+      <td>IR channel number</td>
+    </tr>
+    <tr>
+      <td>fov_poly</td>
+      <td>8</td>
+      <td>lat_bnds, lon_bnds points defining the polygon bounding an FOV (anticlockwise as viewed from above)</td>
+    </tr>
+    <tr>
+      <td>utc_tuple</td>
+      <td>8</td>
+      <td>parts of UTC time: year, month, day, hour, minute, second, millisec, microsec</td>
+    </tr>
+  </tbody>
+</table>
+
+            <center>
+    <FONT COLOR="#000080" SIZE=1 face="Cambria">
+        <H2>Global Attributes</H2>
+    </center>
+    <table border="1" class="dataframe t01">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Name</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>keywords</td>
+      <td>string</td>
+      <td>1</td>
+      <td>EARTH SCIENCE > SPECTRAL/ENGINEERING > INFRARED WAVELENGTHS > INFRARED RADIANCE</td>
+      <td>A comma-separated list of key words and/or phrases. Keywords may be common words or phrases, terms from a controlled vocabulary (GCMD is often used), or URIs for terms from a controlled vocabulary (see also "keywords_vocabulary" attribute).</td>
+    </tr>
+    <tr>
+      <td>Conventions</td>
+      <td>string</td>
+      <td>1</td>
+      <td>CF-1.6\, ACDD-1.3</td>
+      <td>A comma-separated list of the conventions that are followed by the dataset.</td>
+    </tr>
+    <tr>
+      <td>history</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Provides an audit trail for modifications to the original data. This attribute is also in the NetCDF Users Guide: 'This is a character array with a line for each invocation of a program that has modified the dataset. Well-behaved generic netCDF applications should append a line containing: date, time of day, user name, program name and command arguments.' To include a more complete description you can append a reference to an ISO Lineage entity; see NOAA EDM ISO Lineage guidance.</td>
+    </tr>
+    <tr>
+      <td>source</td>
+      <td>string</td>
+      <td>1</td>
+      <td>AIRS and CrIS instrument telemetry</td>
+      <td>The method of production of the original data. If it was model-generated, source should name the model and its version. If it is observational, source should characterize it. This attribute is defined in the CF Conventions. Examples: 'temperature from CTD #1234'; 'world model v.0.1'.</td>
+    </tr>
+    <tr>
+      <td>processing_level</td>
+      <td>string</td>
+      <td>1</td>
+      <td>1</td>
+      <td>A textual description of the processing (or quality control) level of the data.</td>
+    </tr>
+    <tr>
+      <td>product_name_type_id</td>
+      <td>string</td>
+      <td>1</td>
+      <td>L1</td>
+      <td>Product name as it appears in product_name (L1A, L1B, L2, SNO_AIRS_CrIS)</td>
+    </tr>
+    <tr>
+      <td>comment</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Miscellaneous information about the data or methods used to produce it. Can be empty.</td>
+    </tr>
+    <tr>
+      <td>acknowledgment</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Support for this research was provided by NASA.</td>
+      <td>A place to acknowledge various types of support for the project that produced this data.</td>
+    </tr>
+    <tr>
+      <td>license</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Limited to Sounder SIPS affiliates</td>
+      <td>Provide the URL to a standard or specific license, enter "Freely Distributed" or "None", or describe any restrictions to data access and distribution in free text.</td>
+    </tr>
+    <tr>
+      <td>standard_name_vocabulary</td>
+      <td>string</td>
+      <td>1</td>
+      <td>CF Standard Name Table v28</td>
+      <td>The name and version of the controlled vocabulary from which variable standard names are taken. (Values for any standard_name attribute must come from the CF Standard Names vocabulary for the data file or product to comply with CF.) Example: 'CF Standard Name Table v27'.</td>
+    </tr>
+    <tr>
+      <td>date_created</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>The date on which this version of the data was created. (Modification of values implies a new version, hence this would be assigned the date of the most recent values modification.) Metadata changes are not considered when assigning the date_created. The ISO 8601:2004 extended date format is recommended, as described in the Attribute Content Guidance section.</td>
+    </tr>
+    <tr>
+      <td>creator_name</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>The name of the person (or other creator type specified by the creator_type attribute) principally responsible for creating this data.</td>
+    </tr>
+    <tr>
+      <td>creator_email</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>The email address of the person (or other creator type specified by the creator_type attribute) principally responsible for creating this data.</td>
+    </tr>
+    <tr>
+      <td>creator_url</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>The URL of the person (or other creator type specified by the creator_type attribute) principally responsible for creating this data.</td>
+    </tr>
+    <tr>
+      <td>institution</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>Processing facility that produced this file</td>
+    </tr>
+    <tr>
+      <td>project</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Sounder SIPS</td>
+      <td>The name of the project(s) principally responsible for originating this data. Multiple projects can be separated by commas, as described under Attribute Content Guidelines. Examples: 'PATMOS-X', 'Extended Continental Shelf Project'.</td>
+    </tr>
+    <tr>
+      <td>product_name_project</td>
+      <td>string</td>
+      <td>1</td>
+      <td>SNDR</td>
+      <td>The name of the project as it appears in the file name.  'SNDR' for all Sounder SIPS products, even AIRS products.</td>
+    </tr>
+    <tr>
+      <td>publisher_name</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>The name of the person (or other entity specified by the publisher_type attribute) responsible for publishing the data file or product to users, with its current metadata and format.</td>
+    </tr>
+    <tr>
+      <td>publisher_email</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>The email address of the person (or other entity specified by the publisher_type attribute) responsible for publishing the data file or product to users, with its current metadata and format.</td>
+    </tr>
+    <tr>
+      <td>publisher_url</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>The URL of the person (or other entity specified by the publisher_type attribute) responsible for publishing the data file or product to users, with its current metadata and format.</td>
+    </tr>
+    <tr>
+      <td>geospatial_bounds</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Describes the data's 2D or 3D geospatial extent in OGC's Well-Known Text (WKT) Geometry format (reference the OGC Simple Feature Access (SFA) specification). The meaning and order of values for each point's coordinates depends on the coordinate reference system (CRS). The ACDD default is 2D geometry in the EPSG:4326 coordinate reference system. The default may be overridden with geospatial_bounds_crs and geospatial_bounds_vertical_crs (see those attributes). EPSG:4326 coordinate values are longitude (decimal degrees_east) and latitude (decimal degrees_north), in that order. Longitude values in the default case are limited to the [-180, 180) range. Example: 'POLYGON ((-111.29 40.26, -111.29 41.26, -110.29 41.26, -110.29 40.26, -111.29 40.26))'.</td>
+    </tr>
+    <tr>
+      <td>geospatial_bounds_crs</td>
+      <td>string</td>
+      <td>1</td>
+      <td>EPSG:4326</td>
+      <td>The coordinate reference system (CRS) of the point coordinates in the geospatial_bounds attribute. This CRS may be 2-dimensional or 3-dimensional, but together with geospatial_bounds_vertical_crs, if that attribute is supplied, must match the dimensionality, order, and meaning of point coordinate values in the geospatial_bounds attribute. If geospatial_bounds_vertical_crs is also present then this attribute must only specify a 2D CRS. EPSG CRSs are strongly recommended. If this attribute is not specified, the CRS is assumed to be EPSG:4326. Examples: 'EPSG:4979' (the 3D WGS84 CRS), 'EPSG:4047'.</td>
+    </tr>
+    <tr>
+      <td>geospatial_lat_min</td>
+      <td>float</td>
+      <td>1</td>
+      <td>9.9692099683868690e+36f</td>
+      <td>Describes a simple lower latitude limit; may be part of a 2- or 3-dimensional bounding region. Geospatial_lat_min specifies the southernmost latitude covered by the dataset.</td>
+    </tr>
+    <tr>
+      <td>geospatial_lat_max</td>
+      <td>float</td>
+      <td>1</td>
+      <td>9.9692099683868690e+36f</td>
+      <td>Describes a simple upper latitude limit; may be part of a 2- or 3-dimensional bounding region. Geospatial_lat_max specifies the northernmost latitude covered by the dataset.</td>
+    </tr>
+    <tr>
+      <td>geospatial_lon_min</td>
+      <td>float</td>
+      <td>1</td>
+      <td>9.9692099683868690e+36f</td>
+      <td>Describes a simple longitude limit; may be part of a 2- or 3-dimensional bounding region. geospatial_lon_min specifies the westernmost longitude covered by the dataset. See also geospatial_lon_max.</td>
+    </tr>
+    <tr>
+      <td>geospatial_lon_max</td>
+      <td>float</td>
+      <td>1</td>
+      <td>9.9692099683868690e+36f</td>
+      <td>Describes a simple longitude limit; may be part of a 2- or 3-dimensional bounding region. geospatial_lon_max specifies the easternmost longitude covered by the dataset. Cases where geospatial_lon_min is greater than geospatial_lon_max indicate the bounding box extends from geospatial_lon_max, through the longitude range discontinuity meridian (either the antimeridian for -180:180 values, or Prime Meridian for 0:360 values), to geospatial_lon_min; for example, geospatial_lon_min=170 and geospatial_lon_max=-175 incorporates 15 degrees of longitude (ranges 170 to 180 and -180 to -175).</td>
+    </tr>
+    <tr>
+      <td>time_coverage_start</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Nominal start time.  Describes the time of the first data point in the data set. Use the ISO 8601:2004 date format, preferably the extended format as recommended in the Attribute Content Guidance section.</td>
+    </tr>
+    <tr>
+      <td>time_of_first_valid_obs</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Describes the time of the first valid data point in the data set. Use the ISO 8601:2004 date extended format.</td>
+    </tr>
+    <tr>
+      <td>time_coverage_mid</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Describes the midpoint between the nominal start and end times. Use the ISO 8601:2004 date format, preferably the extended format as recommended in the Attribute Content Guidance section.</td>
+    </tr>
+    <tr>
+      <td>time_coverage_end</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Nominal end time.  Describes the time of the last data point in the data set. Use ISO 8601:2004 date format, preferably the extended format as recommended in the Attribute Content Guidance section.</td>
+    </tr>
+    <tr>
+      <td>time_of_last_valid_obs</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Describes the time of the last valid data point in the data set. Use the ISO 8601:2004 date extended format.</td>
+    </tr>
+    <tr>
+      <td>time_coverage_duration</td>
+      <td>string</td>
+      <td>1</td>
+      <td>P0000-00-00T00:06:00</td>
+      <td>Describes the duration of the data set. Use ISO 8601:2004 duration format, preferably the extended format as recommended in the Attribute Content Guidance section.</td>
+    </tr>
+    <tr>
+      <td>product_name_duration</td>
+      <td>string</td>
+      <td>1</td>
+      <td>m06</td>
+      <td>Product duration as it appears in product_name (m06 means six minutes)</td>
+    </tr>
+    <tr>
+      <td>creator_type</td>
+      <td>string</td>
+      <td>1</td>
+      <td>institution</td>
+      <td>Specifies type of creator with one of the following: 'person', 'group', 'institution', or 'position'. If this attribute is not specified, the creator is assumed to be a person.</td>
+    </tr>
+    <tr>
+      <td>creator_institution</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Jet Propulsion Laboratory -- California Institute of Technology</td>
+      <td>The institution of the creator; should uniquely identify the creator's institution. This attribute's value should be specified even if it matches the value of publisher_institution, or if creator_type is  institution.</td>
+    </tr>
+    <tr>
+      <td>product_version</td>
+      <td>string</td>
+      <td>1</td>
+      <td>vxx.xx.xx</td>
+      <td>Version identifier of the data file or product as assigned by the data creator. For example, a new algorithm or methodology could result in a new product_version.</td>
+    </tr>
+    <tr>
+      <td>keywords_vocabulary</td>
+      <td>string</td>
+      <td>1</td>
+      <td>GCMD:GCMD Keywords</td>
+      <td>If you are using a controlled vocabulary for the words/phrases in your "keywords" attribute, this is the unique name or identifier of the vocabulary from which keywords are taken. If more than one keyword vocabulary is used, each may be presented with a prefix and a following comma, so that keywords may optionally be prefixed with the controlled vocabulary key. Example: 'GCMD:GCMD Keywords, CF:NetCDF COARDS Climate and Forecast Standard Names'.</td>
+    </tr>
+    <tr>
+      <td>platform</td>
+      <td>string</td>
+      <td>1</td>
+      <td>JPSS-1 > Joint Polar Satellite System - 1\, SUOMI-NPP > Suomi National Polar-orbiting Partnership\, AQUA > Earth Observing System</td>
+      <td>Name of the platform(s) that supported the sensor data used to create this data set or product. Platforms can be of any type, including satellite, ship, station, aircraft or other. Indicate controlled vocabulary used in platform_vocabulary.</td>
+    </tr>
+    <tr>
+      <td>platform_vocabulary</td>
+      <td>string</td>
+      <td>1</td>
+      <td>GCMD:GCMD Keywords</td>
+      <td>Controlled vocabulary for the names used in the "platform" attribute.</td>
+    </tr>
+    <tr>
+      <td>product_name_platform</td>
+      <td>string</td>
+      <td>1</td>
+      <td>SS1330</td>
+      <td>Platform name as it appears in product_name</td>
+    </tr>
+    <tr>
+      <td>instrument</td>
+      <td>string</td>
+      <td>1</td>
+      <td>AIRS > Atmospheric Infrared Sounder\, CrIS > Cross-track Infrared Sounder</td>
+      <td>Name of the contributing instrument(s) or sensor(s) used to create this data set or product. Indicate controlled vocabulary used in instrument_vocabulary.</td>
+    </tr>
+    <tr>
+      <td>instrument_vocabulary</td>
+      <td>string</td>
+      <td>1</td>
+      <td>GCMD:GCMD Keywords</td>
+      <td>Controlled vocabulary for the names used in the "instrument" attribute.</td>
+    </tr>
+    <tr>
+      <td>product_name_instr</td>
+      <td>string</td>
+      <td>1</td>
+      <td>CHIRP</td>
+      <td>Instrument name as it appears in product_name</td>
+    </tr>
+    <tr>
+      <td>product_name</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Canonical fully qualified product name (official file name)</td>
+    </tr>
+    <tr>
+      <td>product_name_variant</td>
+      <td>string</td>
+      <td>1</td>
+      <td>std</td>
+      <td>Processing variant identifier as it appears in product_name.  'std' (shorthand for 'standard') is to be the default and should be what is seen in all public products.</td>
+    </tr>
+    <tr>
+      <td>product_name_version</td>
+      <td>string</td>
+      <td>1</td>
+      <td>vxx_xx_xx</td>
+      <td>Version number as it appears in product_name (v01_00_00)</td>
+    </tr>
+    <tr>
+      <td>product_name_producer</td>
+      <td>string</td>
+      <td>1</td>
+      <td>T</td>
+      <td>Production facility as it appears in product_name (single character)  'T' is the default, for unofficial local test products</td>
+    </tr>
+    <tr>
+      <td>product_name_timestamp</td>
+      <td>string</td>
+      <td>1</td>
+      <td>yymmddhhmmss</td>
+      <td>Processing timestamp as it appears in product_name (yymmddhhmmss)</td>
+    </tr>
+    <tr>
+      <td>product_name_extension</td>
+      <td>string</td>
+      <td>1</td>
+      <td>nc</td>
+      <td>File extension as it appears in product_name (typically nc)</td>
+    </tr>
+    <tr>
+      <td>granule_number</td>
+      <td>ushort</td>
+      <td>1</td>
+      <td></td>
+      <td>granule number of day (1-240)</td>
+    </tr>
+    <tr>
+      <td>product_name_granule_number</td>
+      <td>string</td>
+      <td>1</td>
+      <td>g000</td>
+      <td>zero-padded string for granule number of day (g001-g240)</td>
+    </tr>
+    <tr>
+      <td>gran_id</td>
+      <td>string</td>
+      <td>1</td>
+      <td>yyyymmddThhmm</td>
+      <td>Unique granule identifier yyyymmddThhmm of granule start, including year, month, day, hour, and minute of granule start time</td>
+    </tr>
+    <tr>
+      <td>geospatial_lat_mid</td>
+      <td>float</td>
+      <td>1</td>
+      <td>9.9692099683868690e+36f</td>
+      <td>granule center latitude</td>
+    </tr>
+    <tr>
+      <td>geospatial_lon_mid</td>
+      <td>float</td>
+      <td>1</td>
+      <td>9.9692099683868690e+36f</td>
+      <td>granule center longitude</td>
+    </tr>
+    <tr>
+      <td>featureType</td>
+      <td>string</td>
+      <td>1</td>
+      <td>trajectory</td>
+      <td>structure of data in file</td>
+    </tr>
+    <tr>
+      <td>data_structure</td>
+      <td>string</td>
+      <td>1</td>
+      <td>trajectory</td>
+      <td>a character string indicating the internal organization of the data with currently allowed values of 'grid', 'station', 'trajectory', or 'swath'. The 'structure' here generally describes the horizontal structure and in all cases data may also be functions, for example, of a vertical coordinate and/or time. (If using CMOR pass this in a call to cmor_set_cur_dataset_attribute.)</td>
+    </tr>
+    <tr>
+      <td>cdm_data_type</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Trajectory</td>
+      <td>The data type, as derived from Unidata's Common Data Model Scientific Data types and understood by THREDDS. (This is a THREDDS "dataType", and is different from the CF NetCDF attribute 'featureType', which indicates a Discrete Sampling Geometry file in CF.)</td>
+    </tr>
+    <tr>
+      <td>id</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>An identifier for the data set, provided by and unique within its naming authority. The combination of the "naming authority" and the "id" should be globally unique, but the id can be globally unique by itself also. IDs can be URLs, URNs, DOIs, meaningful text strings, a local key, or any other unique string of characters. The id should not include white space characters.</td>
+    </tr>
+    <tr>
+      <td>naming_authority</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>The organization that provides the initial id (see above) for the dataset. The naming authority should be uniquely specified by this attribute. We recommend using reverse-DNS naming for the naming authority; URIs are also acceptable. Example: 'edu.ucar.unidata'.</td>
+    </tr>
+    <tr>
+      <td>identifier_product_doi</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>digital signature</td>
+    </tr>
+    <tr>
+      <td>identifier_product_doi_authority</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Unassigned</td>
+      <td>digital signature source</td>
+    </tr>
+    <tr>
+      <td>algorithm_version</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>The version of the algorithm in whatever format is selected by the developers.  After the main algorithm name and version, versions from multiple sub-algorithms may be concatenated with semicolon separators.  (ex: 'CCAST 4.2; BB emis from MIT 2016-04-01')  Must be updated with every delivery that changes numerical results.</td>
+    </tr>
+    <tr>
+      <td>production_host</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Identifying information about the host computer for this run.  (Output of linux "uname -a" command.)</td>
+    </tr>
+    <tr>
+      <td>format_version</td>
+      <td>string</td>
+      <td>1</td>
+      <td>v02.02.07</td>
+      <td>Format version.</td>
+    </tr>
+    <tr>
+      <td>input_file_names</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Semicolon-separated list of names or unique identifiers of files that were used to make this product.  There will always be one space after each semicolon.  There is no final semicolon.</td>
+    </tr>
+    <tr>
+      <td>input_file_types</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Semicolon-separated list of tags giving the role of each input file in input_file_names.  There will always be one space after each semicolon.  There is no final semicolon.</td>
+    </tr>
+    <tr>
+      <td>input_file_dates</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Semicolon-separated list of creation dates for each input file in input_file_names.  There will always be one space after each semicolon.  There is no final semicolon.</td>
+    </tr>
+    <tr>
+      <td>orbitDirection</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Orbit is ascending and/or descending.  Values are "Ascending" or "Descending" if the entire granule fits that description.  "NorthPole" and "SouthPole" are used for polar-crossing granules.  "NA" is used when a determination cannot be made.</td>
+    </tr>
+    <tr>
+      <td>day_night_flag</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>Data is day or night.  "Day" means subsatellite point for all valid scans has solar zenith angle less than 90 degrees.  "Night" means subsatellite point for all valid scans has solar zenith angle greater than 90 degrees.  "Both" means the dataset contains valid observations with solar zenith angle above and below 90 degrees.  "NA" means a value could not be determined.</td>
+    </tr>
+    <tr>
+      <td>AutomaticQualityFlag</td>
+      <td>string</td>
+      <td>1</td>
+      <td>Missing</td>
+      <td>"Passed": all spectra are present and calibrated with no quality issues; "Suspect": at least one spectrum is missing or calibrated with quality issues; "Failed": no calibrated spectra; "Missing": no downlinked data.</td>
+    </tr>
+    <tr>
+      <td>AutomaticQualityFlagExplanation</td>
+      <td>string</td>
+      <td>1</td>
+      <td>'Passed': all spectra are present and calibrated with no quality issues; 'Suspect': at least one spectrum is missing or calibrated with quality issues; 'Failed': no calibrated spectra; 'Missing': no downlinked data.</td>
+      <td>A text explanation of the criteria used to set AutomaticQualityFlag; including thresholds or other criteria.</td>
+    </tr>
+    <tr>
+      <td>qa_pct_data_missing</td>
+      <td>float</td>
+      <td>1</td>
+      <td></td>
+      <td>Percentage of expected observations that are missing.</td>
+    </tr>
+    <tr>
+      <td>qa_pct_data_geo</td>
+      <td>float</td>
+      <td>1</td>
+      <td></td>
+      <td>Percentage of expected observations that are successfully geolocated.</td>
+    </tr>
+    <tr>
+      <td>qa_pct_data_sci_mode</td>
+      <td>float</td>
+      <td>1</td>
+      <td></td>
+      <td>Percentage of expected observations that were taken while the instrument was in science mode and are successfully geolocated.</td>
+    </tr>
+    <tr>
+      <td>qa_no_data</td>
+      <td>string</td>
+      <td>1</td>
+      <td>TRUE</td>
+      <td>A simple indicator of whether this is an "empty" granule with no data from the instrument.  "TRUE" or "FALSE".</td>
+    </tr>
+    <tr>
+      <td>title</td>
+      <td>string</td>
+      <td>1</td>
+      <td>13:30 orbit L1 CHIRP</td>
+      <td>a succinct description of what is in the dataset. (= ECS long name)</td>
+    </tr>
+    <tr>
+      <td>summary</td>
+      <td>string</td>
+      <td>1</td>
+      <td>The CHIRP Level 1 product for the 13:30 sun-synchronous orbit consists of calibrated radiance spectra at a common resolution derived from hyperspectral instruments on EOS-Aqua\, S-NPP\, and JPSS-1/NOAA-20 platforms adjusted to form a continuous climate-quality record.</td>
+      <td>A paragraph describing the dataset, analogous to an abstract for a paper.</td>
+    </tr>
+    <tr>
+      <td>shortname</td>
+      <td>string</td>
+      <td>1</td>
+      <td>SSYN1330CHIRP1_placeholder</td>
+      <td>ECS Short Name</td>
+    </tr>
+    <tr>
+      <td>product_group</td>
+      <td>string</td>
+      <td>1</td>
+      <td>l1_chirp</td>
+      <td>The group name to be used for this product when it is collected in a multi-group file type, like SNO or calsub</td>
+    </tr>
+    <tr>
+      <td>metadata_link</td>
+      <td>string</td>
+      <td>1</td>
+      <td>http://disc.sci.gsfc.nasa.gov/</td>
+      <td>A URL that gives the location of more complete metadata. A persistent URL is recommended for this attribute.</td>
+    </tr>
+    <tr>
+      <td>references</td>
+      <td>string</td>
+      <td>1</td>
+      <td></td>
+      <td>ATDB and design documents describing processing algorithms. Can be empty.</td>
+    </tr>
+    <tr>
+      <td>contributor_name</td>
+      <td>string</td>
+      <td>1</td>
+      <td>UMBC Atmospheric Spectroscopy Laboratory: Larrabee Strow</td>
+      <td>The names of any individuals or institutions that contributed to the creation of this data.</td>
+    </tr>
+    <tr>
+      <td>contributor_role</td>
+      <td>string</td>
+      <td>1</td>
+      <td>CrIS L1B Scientist</td>
+      <td>The roles of any individuals or institutions that contributed to the creation of this data.</td>
+    </tr>
+    <tr>
+      <td>wnum_delta_lw</td>
+      <td>float</td>
+      <td>1</td>
+      <td>0.625f</td>
+      <td>Difference between adjacent wavenumbers in longwave spectrum, in cm-1</td>
+    </tr>
+    <tr>
+      <td>wnum_delta_mw</td>
+      <td>float</td>
+      <td>1</td>
+      <td>0.83333333333f</td>
+      <td>Difference between adjacent wavenumbers in midwave spectrum, in cm-1</td>
+    </tr>
+    <tr>
+      <td>wnum_delta_sw</td>
+      <td>float</td>
+      <td>1</td>
+      <td>1.25f</td>
+      <td>Difference between adjacent wavenumbers in shortwave spectrum, in cm-1</td>
+    </tr>
+  </tbody>
+</table>
+
+            <center>
+    <FONT COLOR="#000080" SIZE=1 face="Cambria">
+        <H2>Global Variables</H2>
+    </center>
+    <table border="1" class="dataframe t01">
+  <thead>
+    <tr style="text-align: left;">
+      <th>Name</th>
+      <th>Type</th>
+      <th>Dimensions</th>
+      <th>Description</th>
+      <th>Units</th>
+      <th>Ancillary Variables</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>obs_id</td>
+      <td>string</td>
+      <td>obs</td>
+      <td>unique earth view observation identifier.</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>obs_time_tai93</td>
+      <td>double</td>
+      <td>obs</td>
+      <td>earth view observation midtime for each FOV</td>
+      <td>seconds since 1993-01-01 00:00</td>
+      <td>bnds</td>
+    </tr>
+    <tr>
+      <td>obs_time_utc</td>
+      <td>uint16</td>
+      <td>obs, utc_tuple</td>
+      <td>UTC earth view observation time as an array of integers: year, month, day, hour, minute, second, millisec, microsec</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>lat</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>latitude of FOV center</td>
+      <td>degrees_north</td>
+      <td>bnds</td>
+    </tr>
+    <tr>
+      <td>lon</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>longitude of FOV center</td>
+      <td>degrees_east</td>
+      <td>bnds</td>
+    </tr>
+    <tr>
+      <td>land_frac</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>land fraction over the FOV</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>surf_alt</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>mean surface altitude wrt  earth model over the FOV</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>surf_alt_sdev</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>standard deviation of surface altitude within the FOV</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sun_glint_lat</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>sun glint spot latitude at scan_mid_time.  Fill for night observations.</td>
+      <td>degrees_north</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sun_glint_lon</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>sun glint spot longitude at scan_mid_time.  Fill for night observations.</td>
+      <td>degrees_east</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sol_zen</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>solar zenith angle at the center of the FOV</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sol_azi</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>solar azimuth angle at the center of the FOV (clockwise from North)</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sun_glint_dist</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>Distance from the center of the calculated sun glint spot to the center of the spot.  Note that there may not be a glint for cloudy or land cases and in ocean cases the glint can move based on wind conditions.  Fill for night observations.</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>view_ang</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>off nadir pointing angle</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sat_zen</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>satellite zenith angle at the center of the FOV</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sat_azi</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>satellite azimuth angle at the center of the FOV (clockwise from North)</td>
+      <td>degree</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sat_range</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>line of sight distance between satellite and FOV center</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>asc_flag</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>ascending orbit flag: 1 if ascending, 0 descending</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>subsat_lat</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>sub-satellite latitude at scan_mid_time</td>
+      <td>degrees_north</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>subsat_lon</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>sub-satellite longitude at scan_mid_time</td>
+      <td>degrees_east</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>scan_mid_time</td>
+      <td>double</td>
+      <td>obs</td>
+      <td>TAI93 at  middle of earth scene scans</td>
+      <td>seconds since 1993-01-01 00:00</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>sat_alt</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>satellite altitude with respect to earth model at scan_mid_time</td>
+      <td>m</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>local_solar_time</td>
+      <td>float</td>
+      <td>obs</td>
+      <td>local apparent solar time in hours from midnight</td>
+      <td>hours</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>utc_tuple_lbl</td>
+      <td>string</td>
+      <td>utc_tuple</td>
+      <td>names of the elements of UTC when it is expressed as an array of integers year,month,day,hour,minute,second,millisecond,microsecond</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>rad</td>
+      <td>float32</td>
+      <td>obs, wnum</td>
+      <td>spectral radiance</td>
+      <td>mW/(m2 sr cm-1)</td>
+      <td>err, qc</td>
+    </tr>
+    <tr>
+      <td>synth_frac</td>
+      <td>float32</td>
+      <td>wnum</td>
+      <td>File mean fraction of signal that is attributed to synthesized AIRS Level-1C values</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>nedn</td>
+      <td>float32</td>
+      <td>fov, wnum</td>
+      <td>noise equivalent differential radiance</td>
+      <td>mW/(m2 sr cm-1)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>atrack</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>Along-track index of Field Of Regard</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>xtrack</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>Cross-track index of Field Of Regard</td>
+      <td>unitless</td>
+      <td>bnds</td>
+    </tr>
+    <tr>
+      <td>fov_num</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>Field Of View number in FOR</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>airs_atrack</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>AIRS-like along-track index of Field Of View</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>airs_xtrack</td>
+      <td>ubyte</td>
+      <td>obs</td>
+      <td>AIRS-like cross-track index of Field Of View</td>
+      <td>unitless</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>wnum</td>
+      <td>float64</td>
+      <td>wnum</td>
+      <td>wavenumber</td>
+      <td>cm-1</td>
+      <td>bnds</td>
+    </tr>
+  </tbody>
+</table>
+

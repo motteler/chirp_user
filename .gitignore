@@ -1,0 +1,43 @@
+#
+# decon_paper git ignore
+#
+
+# data & misc
+*.h5
+*.hdf
+*.mat
+*.log
+*.core
+*.dat
+
+# tex & docs
+*.aux
+*.toc
+*.snm
+*.nav
+*.out
+*.vrb
+*.bbl
+*.blg
+
+# fig files can be huge
+# *.fig
+
+# archives and packages
+*.gz
+*.tgz
+*.tar
+*.zip
+*.bz2
+
+# libs and object files
+*.a
+*.o
+*.so
+*.mexa64
+
+# backup files
+*.svn
+*.bak
+*~
+
