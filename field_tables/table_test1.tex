@@ -1,0 +1,39 @@
+% \begin{longtable}[]{@{}llllll@{}}
+\begin{table}
+\begin{tabularx}{\textwidth}{|c|c|c|X|c|c|}
+\toprule
+obs\_id & string & obs & unique earth view observation identifier. &
+&\tabularnewline
+obs\_time\_tai93 & double & obs & earth view observation midtime for
+each FOV & seconds since 1993-01-01 00:00 & bnds\tabularnewline
+obs\_time\_utc & uint16 & obs, utc\_tuple & UTC earth view observation
+time as an array of integers: year, month, day, hour, minute, second,
+millisec, microsec & &\tabularnewline
+lat & float & obs & latitude of FOV center & degrees\_north &
+bnds\tabularnewline
+lon & float & obs & longitude of FOV center & degrees\_east &
+bnds\tabularnewline
+land\_frac & float & obs & land fraction over the FOV & unitless
+&\tabularnewline
+surf\_alt & float & obs & mean surface altitude wrt earth model over the
+FOV & m &\tabularnewline
+surf\_alt\_sdev & float & obs & standard deviation of surface altitude
+within the FOV & m &\tabularnewline
+sun\_glint\_lat & float & obs & sun glint spot latitude at
+scan\_mid\_time. Fill for night observations. & degrees\_north
+&\tabularnewline
+sun\_glint\_lon & float & obs & sun glint spot longitude at
+scan\_mid\_time. Fill for night observations. & degrees\_east
+&\tabularnewline
+sol\_zen & float & obs & solar zenith angle at the center of the FOV &
+degree &\tabularnewline
+sol\_azi & float & obs & solar azimuth angle at the center of the FOV
+(clockwise from North) & degree &\tabularnewline
+sun\_glint\_dist & float & obs & Distance from the center of the
+calculated sun glint spot to the center of the spot. Note that there may
+not be a glint for cloudy or land cases and in ocean cases the glint can
+move based on wind conditions. Fill for night observations. & m
+&\tabularnewline
+\bottomrule
+\end{tabularx}
+\end{table}

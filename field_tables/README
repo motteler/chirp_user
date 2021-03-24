@@ -22,9 +22,21 @@ doesn’t work for you.
 
 ----
 
-need to sort these out:
-  tabel.tex
-  chirp_1330.tex
-  test.tex
-  test_wrap.tex
+pandoc --from=html --to=latex --output=docs.chirp_1330.tex \
+  docs.chirp_1330.html
+
+pandoc --from=html --to=latex --output=chirp_1330.tex chirp_1330.html
+
+----
+
+  docs.chirp_1330.tex  - pandoc translation of docs.chirp_1330.html
+  test_wrap.tex        - wrapper for docs.chirp_1330.tex test
+
+  table_test1.tex      - subset of docs.chirp_1330, for tests
+  test_wrap1.tex       - wrapper for table test1
+
+  test_wrap2.tex       - direct test of tabularx
+  test_wrap3.tex       - direct test with fields from table_test1.tex
+
+test_wrap3 is the first semi successful translation
 
