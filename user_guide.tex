@@ -32,13 +32,13 @@ climate record.  These instruments have broadly similar spatial
 sampling, spectral resolution, and band spans.  But the spectral
 response functions differ in detail, leading to significant
 differences in observed spectra.  The CHIRP product provides a
-single, combined record of this data, by taking advantage of the
+single, combined record of these data, by taking advantage of the
 similar spatial sampling and translating AIRS and CrIS radiances to
 a common format.  The translation from CrIS to CHIRP is done by
 resampling or double Fourier interpolation.  Translation from AIRS
 to CHIRP is more involved.  AIRS is a grating spectrometer with a
 distinct response function for each channel, while CrIS is a
-Michaelson interferometer with a sinc response function.  We use our
+Michelson interferometer with a sinc response function.  We use our
 knowledge of the AIRS spectral response functions to deconvolve AIRS
 channel radiances to a resolution enhanced intermediate
 representation, which is then reconvolved to the CHIRP user grid.
@@ -46,18 +46,16 @@ representation, which is then reconvolved to the CHIRP user grid.
 The CHIRP record starts with AIRS data from Fall 2002, and will
 cross over to CrIS SNPP or NOAA-20 and continue in the future with
 NOAA-21, 22, etc., with sounder crossover dates to be determined.
-These sounders share a PM equatorial crossing time and will become
-the CHIRP-1330 product.  Although the primary product is a single
-record, support products in the form of translations for other NOAA
-sounders may also be provided.  CHIRP-1330 is made available by JPL
-Sounder SIPS as a product at the GSFC-DIS.  In the future, we plan
-to add IASI, for a CHIRP-1030 product.
+These sounders share an ascending PM equatorial crossing time and
+will become the CHIRP-1330 product.  Although the primary product is
+a single record, support products in the form of translations for
+other NOAA sounders may also be provided.  CHIRP-1330 is made
+available by JPL Sounder SIPS as a product at the GSFC-DISC.  In the
+future IASI may be added, for a CHIRP-1030 product.
 
 %----------- section --------------------------------------------------%
 \section{Data Format}
 \label{format}
-
-% We begin with a quick overview of the CHIRP data format.
 
 AIRS L1c and CrIS L1b radiance data are organized as a sequence of
 granule files, ordered by scan geometery and observation time.
@@ -65,19 +63,19 @@ CHIRP granules correspond with their parent AIRS or CrIS granules,
 and inherit most of the parent granule's attributes and supporting
 data.  CHIRP granules follow JPL conventions for field names and
 attributes, and are saved in netCDF.  There are 1679 CHIRP channels,
-described in detail in section \ref{rad}.  A CHIRP observation (aka
-``obs'') is a 1679-channel radiance vector, with associated values
-for time, FOV (for CrIS), original indices for AIRS or CrIS, along
-with most of the geo, support data, and product attributes from the
-parent sounders.  This involves some duplication of information for
-the individual observations, but the overhead for this is small in
-comparison with the radiance data.  The key idea is that each obs
-can stand alone as a largely self-sufficient unit of information.
-CHIRP data is then a list of such obs.  The CHIRP data is organized
-as an $1679 \times 12150$ array, channels by obs, in time order,
-while most of the supporting data is organized as $12150$-vectors.
-The choice of 12150 obs per granule is discussed in section
-\ref{sampling}.
+described in detail in section \ref{rad}.  A CHIRP observation, or
+``obs'' for short, is a 1679-channel radiance vector with associated
+values for time, FOV (for CrIS), original indices for AIRS or CrIS,
+along with most of the geolocation, support data, and product
+attributes from the parent sounders.  This involves some duplication
+of information for the individual obs, but the overhead for this is
+small in comparison with the radiance data.  The key idea is that
+each obs can stand alone as a largely self-sufficient unit of
+information.  CHIRP data is then a list of such obs.  The CHIRP data
+is organized as an $1679 \times 12150$ array, channels by obs, in
+time order, while most of the supporting data is organized as
+$12150$-vectors.  The choice of 12150 obs per granule is discussed
+in section \ref{sampling}.
 
 %----------- section --------------------------------------------------%
 \section{Radiances}
@@ -141,7 +139,7 @@ channel.
 
 We want to match this ILS for the AIRS-parent data.  But AIRS is a
 grating spectrometer with a distinct response function for each
-channel, while CrIS is a Michaelson interferometer with a sinc
+channel, while CrIS is a Michelson interferometer with a sinc
 response function after calibration and corrections.  We use our
 detailed knowledge of the AIRS spectral response functions to
 deconvolve AIRS channel radiances to a resolution enhanced
@@ -202,19 +200,19 @@ with missing channels flagged as described in section \ref{qcnedn}.
 
 AIRS and CrIS spatial sampling are similar, but not identical.
 AIRS and CrIS are both in sun-synchronous polar orbits.  The CrIS
-orbital period is 101.5 minutes $\pm 0.2$ seconds, giving 227 orbits
-every 16 days.  The AIRS orbital period 98.8 minutes, giving 233
-orbits every 16 days.  Note that 227 and 233 are both prime; there
-are no common factors and so no repeating subpatterns.  Figure
-\ref{fig4} shows global values for satellite subpoint for one day of
-AIRS and CrIS data, and figure \ref{fig5} for 16 days, the full
-period before any repeated postitions, for the Caribbean.  AIRS and
-CrIS are cross-track scanners, and in addition to subpoint tracks we
-need to compare the scan geometry.  Figure \ref{fig6} shows the
-secant of zenith angles for AIRs and CrIS.  The upper plot is for
-the full scan widths, while the lower is a near-nadir detail.  The
-general agreement is quite good, and the main difference we see is
-due to the the CrIS FOV grouping.
+orbital period is 101.5 minutes, giving 227 orbits every 16 days.
+The AIRS orbital period 98.8 minutes, giving 233 orbits every 16
+days.  Note that 227 and 233 are both prime; there are no common
+factors and so no repeating subpatterns.  Figure \ref{fig4} shows
+global values for satellite subpoint for one day of AIRS and CrIS
+data, and figure \ref{fig5} for 16 days, the full period before any
+repeated postitions, for the Caribbean.  AIRS and CrIS are
+cross-track scanners, and in addition to subpoint tracks we need to
+compare the scan geometry.  Figure \ref{fig6} shows the secant of
+zenith angles for AIRS and CrIS.  The upper plot is for the full
+scan widths, while the lower is a near-nadir detail.  The general
+agreement is quite good, and the main difference we see is due to
+the CrIS FOV grouping.
 
 The AIRS L1c scan geometery is organized as 90 cross-track by 135
 along-track observations, giving $90 \times 135 = 12150$ obs per

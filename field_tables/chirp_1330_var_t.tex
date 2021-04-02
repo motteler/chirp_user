@@ -1,82 +1,92 @@
-\begin{longtable}[]{@{}llllll@{}}
-\toprule
-Name & Type & Dimensions & Description & Units & Ancillary
-Variables\tabularnewline
-\midrule
-\endhead
+
+\subsection{Variables}
+
+\begin{center}
+\begin{xltabular}{\textwidth}{|l|l|
+>{\hsize=.4\hsize\linewidth=\hsize}X|
+>{\hsize=2\hsize\linewidth=\hsize}X|
+>{\hsize=.6\hsize\linewidth=\hsize}X|
+l|
+}
+
+\hline
+Name & Type & Dim & Description & Units & Ancillary 
+\tabularnewline\hline\hline
 obs\_id & string & obs & unique earth view observation identifier. &
-&\tabularnewline
+&\tabularnewline\hline
 obs\_time\_tai93 & double & obs & earth view observation midtime for
-each FOV & seconds since 1993-01-01 00:00 & bnds\tabularnewline
+each FOV & seconds since 1993-01-01 00:00 & bnds\tabularnewline\hline
 obs\_time\_utc & uint16 & obs, utc\_tuple & UTC earth view observation
 time as an array of integers: year, month, day, hour, minute, second,
-millisec, microsec & &\tabularnewline
+millisec, microsec & &\tabularnewline\hline
 lat & float & obs & latitude of FOV center & degrees\_north &
-bnds\tabularnewline
+bnds\tabularnewline\hline
 lon & float & obs & longitude of FOV center & degrees\_east &
-bnds\tabularnewline
+bnds\tabularnewline\hline
 land\_frac & float & obs & land fraction over the FOV & unitless
-&\tabularnewline
+&\tabularnewline\hline
 surf\_alt & float & obs & mean surface altitude wrt earth model over the
-FOV & m &\tabularnewline
+FOV & m &\tabularnewline\hline
 surf\_alt\_sdev & float & obs & standard deviation of surface altitude
-within the FOV & m &\tabularnewline
+within the FOV & m &\tabularnewline\hline
 sun\_glint\_lat & float & obs & sun glint spot latitude at
 scan\_mid\_time. Fill for night observations. & degrees\_north
-&\tabularnewline
+&\tabularnewline\hline
 sun\_glint\_lon & float & obs & sun glint spot longitude at
 scan\_mid\_time. Fill for night observations. & degrees\_east
-&\tabularnewline
+&\tabularnewline\hline
 sol\_zen & float & obs & solar zenith angle at the center of the FOV &
-degree &\tabularnewline
+degree &\tabularnewline\hline
 sol\_azi & float & obs & solar azimuth angle at the center of the FOV
-(clockwise from North) & degree &\tabularnewline
+(clockwise from North) & degree &\tabularnewline\hline
 sun\_glint\_dist & float & obs & Distance from the center of the
 calculated sun glint spot to the center of the spot. Note that there may
 not be a glint for cloudy or land cases and in ocean cases the glint can
 move based on wind conditions. Fill for night observations. & m
-&\tabularnewline
+&\tabularnewline\hline
 view\_ang & float & obs & off nadir pointing angle & degree
-&\tabularnewline
+&\tabularnewline\hline
 sat\_zen & float & obs & satellite zenith angle at the center of the FOV
-& degree &\tabularnewline
+& degree &\tabularnewline\hline
 sat\_azi & float & obs & satellite azimuth angle at the center of the
-FOV (clockwise from North) & degree &\tabularnewline
+FOV (clockwise from North) & degree &\tabularnewline\hline
 sat\_range & float & obs & line of sight distance between satellite and
-FOV center & m &\tabularnewline
+FOV center & m &\tabularnewline\hline
 asc\_flag & ubyte & obs & ascending orbit flag: 1 if ascending, 0
-descending & &\tabularnewline
+descending & &\tabularnewline\hline
 subsat\_lat & float & obs & sub-satellite latitude at scan\_mid\_time &
-degrees\_north &\tabularnewline
+degrees\_north &\tabularnewline\hline
 subsat\_lon & float & obs & sub-satellite longitude at scan\_mid\_time &
-degrees\_east &\tabularnewline
+degrees\_east &\tabularnewline\hline
 scan\_mid\_time & double & obs & TAI93 at middle of earth scene scans &
-seconds since 1993-01-01 00:00 &\tabularnewline
+seconds since 1993-01-01 00:00 &\tabularnewline\hline
 sat\_alt & float & obs & satellite altitude with respect to earth model
-at scan\_mid\_time & m &\tabularnewline
+at scan\_mid\_time & m &\tabularnewline\hline
 local\_solar\_time & float & obs & local apparent solar time in hours
-from midnight & hours &\tabularnewline
+from midnight & hours &\tabularnewline\hline
 utc\_tuple\_lbl & string & utc\_tuple & names of the elements of UTC
 when it is expressed as an array of integers
 year,month,day,hour,minute,second,millisecond,microsecond &
-&\tabularnewline
+&\tabularnewline\hline
 rad & float32 & obs, wnum & spectral radiance & mW/(m2 sr cm-1) & err,
-qc\tabularnewline
+qc\tabularnewline\hline
 synth\_frac & float32 & wnum & File mean fraction of signal that is
 attributed to synthesized AIRS Level-1C values & unitless
-&\tabularnewline
+&\tabularnewline\hline
 nedn & float32 & fov, wnum & noise equivalent differential radiance &
-mW/(m2 sr cm-1) &\tabularnewline
+mW/(m2 sr cm-1) &\tabularnewline\hline
 atrack & ubyte & obs & Along-track index of Field Of Regard & unitless
-&\tabularnewline
+&\tabularnewline\hline
 xtrack & ubyte & obs & Cross-track index of Field Of Regard & unitless &
-bnds\tabularnewline
+bnds\tabularnewline\hline
 fov\_num & ubyte & obs & Field Of View number in FOR & unitless
-&\tabularnewline
+&\tabularnewline\hline
 airs\_atrack & ubyte & obs & AIRS-like along-track index of Field Of
-View & unitless &\tabularnewline
+View & unitless &\tabularnewline\hline
 airs\_xtrack & ubyte & obs & AIRS-like cross-track index of Field Of
-View & unitless &\tabularnewline
+View & unitless &\tabularnewline\hline
 wnum & float64 & wnum & wavenumber & cm-1 & bnds\tabularnewline
-\bottomrule
-\end{longtable}
+\hline
+\end{xltabular}
+\end{center}
+

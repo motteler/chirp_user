@@ -1,11 +1,14 @@
-\documentclass[10pt]{article}
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{placeins}
 \usepackage{amsmath}
 \usepackage{hyperref}
-\usepackage{longtable}
+% \usepackage{longtable}
 \usepackage{booktabs}
-\usepackage{tabularx}
+% \usepackage{tabularx}
+\usepackage{xltabular}
+\usepackage{ltablex}
 
 \title{test wrapper for tables}
 
@@ -17,11 +20,15 @@
 
 \date{\today}
 \begin{document}
+%------------------------------------------------------------------
+\section{Appendix A}
 
-\maketitle
+% small sizes: \tiny \scriptsize \footnotesize \small
 
-\section{the big table}
-
-\input{docs.chirp_1330.tex}
-
+{\scriptsize
+\input{chirp_1330.dims_t.tex}
+\input{chirp_1330_var_t.tex}
+\input{chirp_1330.attrs_t.tex}
+}
+%------------------------------------------------------------------
 \end{document}
