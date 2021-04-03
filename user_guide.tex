@@ -6,6 +6,9 @@
 \usepackage{amsmath}
 \usepackage{url}
 \usepackage{cite}
+\usepackage{array}
+\usepackage{xltabular}
+\usepackage{ltablex}
 
 \input{crisdefs.tex}
 
@@ -202,7 +205,7 @@ with missing channels flagged as described in section \ref{qcnedn}.
 \begin{figure} % source plot_tbin.m
   \centering
   \includegraphics[width=0.9\linewidth]{figures/cris_for_2.png}
-  \caption{CrIS scan geometery, from the NOAA User's Guide}
+  \caption{CrIS scan geometery, from the NOAA User's Guide \cite{ntech1}}
   \label{fig7}
 \end{figure}
 
@@ -244,12 +247,12 @@ atrack are FOR rather than FOV indices, in the fields
 
 CHIRP Quality Control (QC) is straighforward.  There are two QC
 fields per granule, \texttt{rad\_qc}, a 12150-vector with one flag
-value per obs, and \texttt{chan\_qc}, a 1679-vector with one flag
-value per channel.  For both vectors, 0 = OK, 1 = warn, and 2 = bad.
-For CrIS-parent CHIRP these fields are a summary of the parent
-product state.  For AIRS-parent CHIRP the situation is more complex,
-due to a significant and variable number of AIRS synthetic channels,
-and because the set of 1483 channels from the AIRS translation is a
+per obs, and \texttt{chan\_qc}, a 1679-vector with one flag per
+channel.  For both vectors, 0 = OK, 1 = warn, and 2 = bad.  For
+CrIS-parent CHIRP these fields are a summary of the parent product
+state.  For AIRS-parent CHIRP the situation is more complex, due to
+a significant and variable number of AIRS synthetic channels, and
+because the set of 1483 channels from the AIRS translation are a
 subset of the 1679 channels from the CrIS translation.
 
 \subsection{AIRS-parent CHIRP QC}
@@ -257,68 +260,72 @@ subset of the 1679 channels from the CrIS translation.
 For AIRS-parent CHIRP the 1679-element vector \texttt{chan\_qc} is
 set to 2 (bad) for those channels that are not part of the 1483
 channel set, as translated from AIRS.  This is a compromise that
-lets us use a single freqency grid for CHIRP, regardless of the
-parent sounder.  If we begin by choosing a set of channels to work
-with AIRS-parent data, we can continue using that set with the
-change to CrIS-parent, with no changes in our indexing.  In addition
-to flagging missing channels, \texttt{chan\_qc} is set to 1 (warn)
-for the six channels at the translation band edges, and when the
+give us a single freqency grid for CHIRP, regardless of the parent
+sounder.  If we begin by choosing a set of channels to work with
+AIRS-parent data, we can continue using that set with the change to
+CrIS-parent, with no changes in our indexing.  In addition to
+flagging missing channels, \texttt{chan\_qc} is set to 1 (warn) for
+the six channels at the translation band edges, and when the
 synthetic component exceeds a threshold, as described below.
 
 The 12150-element vector \texttt{rad\_qc} has a flag for each obs.
 These are set to 0 (OK) if the L1c field \texttt{instrument\_state}
 is OK and radiance and geo values pass some basic sanity checks.
-\texttt{rad\_qc} is always 0 or 2 for AIRS-parent CHIRP because AIRS
-L1c doesn't have a warn flag.
+\texttt{rad\_qc} is always 0 or 2 for AIRS-parent CHIRP, because
+AIRS L1c doesn't have a warn flag.
 
 \subsection{AIRS Synthetic Channels}
 
 As an alternative to a warn flag, and to fill band gaps, AIRS L1c
-provides synthetic values for some obs and channels.  These are
-flagged in the L1c file for every obs and channel.  In addition, the
-granule file has a per-granule summary, L1cNumSynth, for each L1c
-channel.  This is the number of times the channel was filled with a
-synthetic value.  L1cNumSynth can range from zero, for no synthetic
-values, to 12150, for all synthetic.  Figure \ref{fig8} shows the
-sum of all synthetic obs by channel, for 5036 consecutive AIRS
-granules, approximately 21 days of data.  Counts are shown on a log
-scale.  Figure \ref{fig9} shows the same data as synthetic obs per
-channel, sorted by number of synthetic obs. This shows the wide
-range of values, from few or no synthetic obs for some channels, to
-entirely synthetic for others.
+provides synthetic values for some observations and channels.  That
+is, for a particular observation--a radiance vector with an
+associated time, geolocation, et cetera---some of the channels may
+be synthetic.  Some of these channels are synthetic only
+occasionally, others more frequently, and some are always synthetic.
+These are all flagged in the L1c file for every observation and
+channel.  In addition, the granule file has a per-granule summary,
+L1cNumSynth, for each L1c channel.  This is the number of times the
+channel was filled with a synthetic value.  L1cNumSynth can range
+from zero, for no synthetic values, to 12150, for all synthetic.
+Figure \ref{fig8} shows the sum of all synthetic values by channel,
+for 5036 consecutive AIRS granules, approximately 21 days of data.
+Counts are shown on a log scale.  Figure \ref{fig9} shows the same
+data as synthetic values per channel, sorted by number of synthetic
+values.  This shows the wide range of values, from few or no
+synthetic values for some channels, to entirely synthetic values for
+others.
 
-% For some applications we may not want a significant synthetic
-% component.  
-
-The CHIRP field \texttt{synth\_frac} provides the AIRS synthetic
-component for each CHIRP channel.  This can range from zero, for no
-synthetic component, to one, for entirely synthetic.  To get this
-value we linearize the AIRS to CrIS translation and apply it to the
-AIRS L1cNumSynth, to get a corresponding NumSynth value for CHIRP.
-This is normalized as a fraction and becomes the CHIRP field
-\texttt{synth\_frac}.  Figure \ref{fig10} shows the AIRS-parent CHIRP
-synthetic fraction for a single representative granule. This can be
-used to select channels with a relatively small synthetic component.
-Figure \ref{fig11} show the AIRS-parent CHIRP synthetic fraction,
-sorted by synthetic fraction magnitude.  This shows the variability
-of \texttt{synth\_frac}.  If $\hbox{\texttt{synth\_frac}} > 0.25$,
-we set \texttt{chan\_qc} to warn.  The threshold $0.25$ is a
-parameter that can be changed in the production YAML specs.
+For some applications we may not want a significant synthetic
+component.  The CHIRP field \texttt{synth\_frac} provides the AIRS
+synthetic component for each CHIRP channel.  This can range from
+zero, for no synthetic component, to one, for entirely synthetic.
+To get this value we linearize the AIRS to CrIS translation and
+apply it to the AIRS L1cNumSynth, to get a corresponding NumSynth
+value for CHIRP.  This is normalized as a fraction and becomes the
+CHIRP field \texttt{synth\_frac}.  Figure \ref{fig10} shows the
+AIRS-parent CHIRP synthetic fraction for a single representative
+granule. This can be used to select channels with a relatively small
+synthetic component.  Figure \ref{fig11} show the AIRS-parent CHIRP
+synthetic fraction, sorted by synthetic fraction magnitude.  This
+shows the variability of \texttt{synth\_frac}.  If
+$\hbox{\texttt{synth\_frac}} > 0.25$, we set \texttt{chan\_qc} to
+warn.  The threshold $0.25$ is a parameter that can be changed in
+the production YAML specs.
 
 \begin{figure}
   \centering
   \begin{minipage}[t]{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/synth_obs_freq_order.pdf}
-    \caption{The sum of synthetic obs by channel for 5036 AIRS
+    \caption{The sum of synthetic values by channel for 5036 AIRS
       granules.  Counts are on a log scale.}
     \label{fig8}
   \end{minipage}\hfill
   \begin{minipage}[t]{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/synthetic_obs_counts.pdf}
-    \caption{Synthetic obs per channel, sorted by number of
-      synthetic obs.  This shows the range of values.}
+    \caption{Synthetic values per channel, sorted by number of
+      synthetic values.  This shows the range of these values.}
     \label{fig9}
   \end{minipage}
 \end{figure}
@@ -402,5 +409,44 @@ to take into account the interpolation and apodization.  These are
 \bibliographystyle{abbrv}
 \bibliography{user_guide}
 
-\end{document}
+\appendix
+\section{Acronyms}
 
+\begin{center}
+\begin{tabular}{ m{2cm} m{10cm} }
+AIRS    & Atmospheric Infrared Sounder \\
+CHIRP   & Combined Hyperspectral Infrared Radiance Product \\
+CrIS    & Cross-track Infrared Sounder \\
+DISC    & Data and Information Services Center \\
+FOV     & Field of View \\
+FOR     & Field of Regard \\
+FSR     & Full Spectral Resolution \\
+GSFC    & Goddard Spaceflight Center \\
+ILS     & Instrument Line Shape \\
+IASI    & Infrared Atmospheric Sounding Interferometer \\
+JPSS    & Joint Polar Satellite System \\
+LW      & Long-Wave \\
+MW      & Mid-Wave \\
+SW      & Short-Wave \\
+NASA    & National Aeronautics and Space Administration \\
+NOAA    & National Oceanic and Atmospheric Administration \\
+NEdN    & Noise Equivalent Differential Radiance \\
+QC      & Quality Control \\
+SIPS    & Science Investigator-led Processing System \\
+SNPP    & Suomi-National Polar-Orbiting Preparatory Project \\
+SRF     & Spectral Response Function \\
+STAR    & Center for Satellite Applications and Research \\
+\end{tabular}
+\end{center}
+
+\section{Field Definitions}
+
+% small sizes: \tiny \scriptsize \footnotesize \small
+
+{\scriptsize
+\input{field_tables/chirp_1330.dims_t.tex}
+\input{field_tables/chirp_1330_var_t.tex}
+\input{field_tables/chirp_1330.attrs_t.tex}
+}
+
+\end{document}
