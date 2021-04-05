@@ -439,6 +439,48 @@ STAR    & Center for Satellite Applications and Research \\
 \end{tabular}
 \end{center}
 
+\section{Filename Conventions}
+
+CHIRP granule filenames are divided into fields separated by a dot
+character.  This is best illustrated by example.  The following are
+typical granule file names for AIRS AQUA, CrIS SNPP, and CrIS J1
+(aka NOAA-20).
+
+\begin{center}
+\texttt{SNDR.SS1330.CHIRP.20180901T1835.m06.g186.L1\_AQ.std.v02\_20.U.201219110001.nc} \\
+\texttt{SNDR.SS1330.CHIRP.20180821T0129.m06.g016.L1\_SN.std.v02\_20.U.200917211403.nc} \\
+\texttt{SNDR.SS1330.CHIRP.20180913T2217.m06.g224.L1\_J1.std.v02\_20.U.201215180423.nc} \\
+\texttt{~~1~~~~~2~~~~~3~~~~~~~~4~~~~~~~~~5~~~~6~~~~7~~~~8~~~~9~~~10~~~~~~11~~~~~12} \\
+\end{center}
+
+The 12 fields correpsond to CHIRP attributes, and are defined in
+more detail in section \ref{attrs}.  Field 7, the
+\texttt{product\_name\_type\_id}, is of particular interest.  The
+sub-fields AQ, SN, and J1 are two letter codes for AIRS AQUA, CrIS
+Sunomi NPP, and CrIS J1 (aka NOAA-20), respectively.  This is the
+parent sounder for the granule.  A suffix ``CAL'', for example
+L1\_AQ\_CAL, L1\_NP\_CAL, or L1\_J1\_CAL, indicates a calibration
+product, while no suffix (as in the examples above) indicates the
+standard or official CHIRP product.
+
+\begin{center}
+\begin{tabular}{ m{1.4cm} m{10cm} }
+  Field & Attribute Name \\
+   1 & \texttt{product\_name\_project} \\
+   2 & \texttt{product\_name\_platform} \\
+   3 & \texttt{product\_name\_instr} \\
+   4 & \texttt{gran\_id} \\
+   5 & \texttt{product\_name\_duration} \\
+   6 & \texttt{product\_name\_granule\_number} \\
+   7 & \texttt{product\_name\_type\_id} \\
+   8 & \texttt{product\_name\_variant} \\
+   9 & \texttt{product\_name\_version} \\
+  10 & \texttt{product\_name\_producer} \\
+  11 & \texttt{product\_name\_timestamp} \\
+  12 & \texttt{product\_name\_extension} \\
+\end{tabular}
+\end{center}
+
 \section{Field Definitions}
 
 % small sizes: \tiny \scriptsize \footnotesize \small
