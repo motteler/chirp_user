@@ -36,7 +36,7 @@ sampling, spectral resolution, and band spans.  But the spectral
 response functions differ in detail, leading to significant
 differences in observed spectra.  The CHIRP product provides a
 single, combined record of these data, by taking advantage of the
-similar spatial sampling and translating AIRS and CrIS radiances to
+similar spatial sampling, and translating AIRS and CrIS radiances to
 a common format.  The translation from CrIS to CHIRP is done by
 resampling or double Fourier interpolation.  Translation from AIRS
 to CHIRP is more involved.  AIRS is a grating spectrometer with a
@@ -51,10 +51,11 @@ cross over to CrIS SNPP or NOAA-20 and continue in the future with
 NOAA-21, 22, etc., with sounder crossover dates to be determined.
 These sounders share an ascending PM equatorial crossing time and
 will become the CHIRP-1330 product.  Although the primary product is
-a single record, support products in the form of translations for
-other NOAA sounders may also be provided.  CHIRP-1330 is made
-available by JPL Sounder SIPS as a product at the GSFC-DISC.  In the
-future IASI may be added, for a CHIRP-1030 product.
+a single continuous record, support products in the form of
+translations for other NOAA sounders may also be provided.
+CHIRP-1330 is made available by JPL Sounder SIPS as a product at the
+GSFC-DISC.  In the future IASI may be added, for a CHIRP-1030
+product.
 
 %----------- section --------------------------------------------------%
 \section{Data Format}
@@ -459,9 +460,9 @@ more detail in section \ref{attrs}.  Field 7, the
 sub-fields AQ, SN, and J1 are two letter codes for AIRS AQUA, CrIS
 Sunomi NPP, and CrIS J1 (aka NOAA-20), respectively.  This is the
 parent sounder for the granule.  A suffix ``CAL'', for example
-L1\_AQ\_CAL, L1\_NP\_CAL, or L1\_J1\_CAL, indicates a calibration
+L1\_AQ\_CAL, L1\_NP\_CAL, or L1\_J1\_CAL, indicates a support
 product, while no suffix (as in the examples above) indicates the
-standard or official CHIRP product.
+primary CHIRP product.
 
 \begin{center}
 \begin{tabular}{ m{1.4cm} m{10cm} }
