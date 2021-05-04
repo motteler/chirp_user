@@ -13,6 +13,8 @@
 
 \input{crisdefs.tex}
 
+\newcommand {\radunits} {\hbox{mW sr$^{-1}$ m$^{-2}$}}
+
 \title{
   CHIRP User Guide \\
 }
@@ -37,57 +39,138 @@ hyper-spectral sounders are a significant part of the long term
 climate record.  These instruments have broadly similar spatial
 sampling, spectral resolution, and band spans.  But the spectral
 response functions differ in detail, leading to significant
-differences in observed spectra.  The CHIRP product provides a
-single, combined record of these data, by taking advantage of the
-similar spatial sampling, and translating AIRS and CrIS radiances to
-a common format.  The translation from CrIS to CHIRP is done by
-resampling or double Fourier interpolation.  Translation from AIRS
-to CHIRP is more involved.  AIRS is a grating spectrometer with a
-distinct response function for each channel, while CrIS is a
-Michelson interferometer with a sinc response function.  We use our
-knowledge of the AIRS spectral response functions to deconvolve AIRS
-channel radiances to a resolution enhanced intermediate
-representation, which is then reconvolved to the CHIRP user grid.
+differences in observed spectra.
+The Climate Hyperspectral Infrared Radiance Product (CHIRP) provides
+a single, combined record of these data, by taking advantage of the
+similar spatial sampling, translating AIRS and CrIS radiances to a
+common spectral response function, and removing inter-satellite
+biases.  CHIRP provides a stable climate-quality radiance time
+series spanning AIRS, CrIS, and potentially in the future, IASI
+radiance data.  Other benefits include facilitating instrument
+comparisons and allowing level~2 retrievals to use a common channel
+set and radiative transfer algorithm.
+
+The translation from CrIS to CHIRP is done by resampling or double
+Fourier interpolation.  Translation from AIRS to CHIRP is more
+involved.  AIRS is a grating spectrometer with a distinct response
+function for each channel, while CrIS is a Michelson interferometer
+with a sinc response function.  We use our knowledge of the AIRS
+spectral response functions to deconvolve AIRS channel radiances to
+a resolution enhanced intermediate representation, which is then
+reconvolved to the CHIRP user grid.  The CrIS instrument on NASA's
+SNPP satellite is used as the calibration standard, while a bias
+adjustment is applied to the other translations \cite{strow2021a}.
+
+% chirp timeline
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/chirp_timeline.png}
+  \caption{Timeline for CHIRP and component products.}
+  \label{fig0}
+\end{figure}
 
 The CHIRP record starts with AIRS data from Fall 2002, and will
-cross over to CrIS SNPP or NOAA-20 and continue in the future with
+cross over to CrIS SNPP and then CrIS J1 (aka NOAA-20) as shown in
+figure \ref{fig0}.  This is planned to continue in the future with
 NOAA-21, 22, etc., with sounder crossover dates to be determined.
-These sounders share an ascending PM equatorial crossing time and
-will become the CHIRP-1330 product.  Although the primary product is
-a single continuous record, support products in the form of
-translations for other NOAA sounders may also be provided.
-CHIRP-1330 is made available by JPL Sounder SIPS as a product at the
-GSFC-DISC.  In the future IASI may be added, for a CHIRP-1030
-product.  This user guide includes sections on the data format,
-radiances, sampling, quality control, and NEdN estimates, and tables
-of all variables and attributes.  For more detail on the AIRS to
-CHIRP translation, see reference \cite{mott2018}, and for more on
-bias adjustments and questions of long-term stability, see reference
+These sounders share an ascending 1:30 PM (13:30) equatorial
+crossing time and are combined to make the CHIRP-1330 product.
+Although the primary product is a single continuous record, support
+products in the form of translations for other NOAA sounders are
+also provided as CHIRP-CAL products.  CHIRP-1330 is made available
+by JPL Sounder SIPS as a product at the GSFC-DISC.
+
+Section \ref{format} is a short introduction to using the CHIRP data.
+This is followed by sections with more detail on radiances, sampling,
+quality control, and NEdN estimates, and an appendix with tables of
+all variables and attributes.  For more detail on the AIRS to CHIRP
+translation, see reference \cite{mott2018}, and for more on bias
+adjustments and questions of long-term stability, see reference
 \cite{strow2021a}.
 
 %----------- section --------------------------------------------------%
-\section{Data Format}
+\section{Quick Start}
 \label{format}
 
-AIRS L1c and CrIS L1b radiance data are organized as a sequence of
-granule files, ordered by scan geometery and observation time.
-CHIRP granules correspond with their parent AIRS or CrIS granules,
-and inherit most of the parent granule's attributes and supporting
-data.  CHIRP granules follow JPL conventions for field names and
-attributes, and are saved in netCDF.  There are 1679 CHIRP channels,
-described in detail in section \ref{rad}.  A CHIRP observation, or
-``obs'' for short, is a 1679-channel radiance vector with associated
-values for time, FOV (for CrIS), original indices for AIRS or CrIS,
-along with most of the geolocation, support data, and product
-attributes from the parent sounders.  This involves some duplication
-of information for the individual obs, but the overhead for this is
-small in comparison with the radiance data.  The key idea is that
-each obs can stand alone as a largely self-sufficient unit of
-information.  CHIRP data is then a list of such obs.  The CHIRP data
-is organized as an $1679 \times 12150$ array, channels by obs, in
-time order, while most of the supporting data is organized as
-$12150$-vectors.  The choice of 12150 obs per granule is discussed
-in section \ref{sampling}.
+CHIRP data is saved as a sequence of granule files, in time order,
+in netCDF format.  A CHIRP observation, or ``obs'' for short, is a
+1679-channel radiance vector with associated values for time,
+geolocation, latitude, longitude, quality control, and various other
+support data.  The key idea is that each such obs can stand alone as
+a largely self-sufficient unit of information.  CHIRP data is then
+simply a list of such obs, in time order.  The CHIRP radiance data
+is organized as a $1679 \times 12150$ array, channels by obs, while
+most of the supporting data is organized as $12150$-vectors.  The
+choice of 12150 obs per granule is discussed in section
+\ref{sampling}.
+
+For example, suppose an application needs radiance, channel
+frequency, quality control, obs time, latitude, and longitude.
+The CHIRP netCDF fields, data types, and physical units are as
+follows:
+
+\begin{itemize}
+
+\item
+The CHIRP radiance field is \texttt{rad}, a 1679 by 12150 element
+single precision array, in units of \radunits.  Channel frequency is
+\texttt{wnum}, a 1679 element double precision vector, in units of
+wavenumber.
+
+\item
+Quality control fields are \texttt{chan\_qc} and \texttt{rad\_qc}.
+\texttt{chan\_qc} is a 1679 element int8 array, one flag per
+channel, with 0=OK, 1=Warn, and 2=Bad.  \texttt{rad\_qc} is a 12150
+element int8 array, one flag per obs, where again 0=OK, 1=Warn, and
+2=Bad.
+
+\item
+The time field is \texttt{obs\_time\_tai93}, a 12150 element double
+precision vector, seconds since 1 Jan 1993.
+
+\item
+The geolocation fields are are \texttt{lat} and \texttt{lon}, 12150
+element single precision vectors, with units degrees north and
+degrees east.
+
+\end{itemize}
+
+The organization of other support variables generally similar, and
+all CHIRP fields and attributes are defined in appendix \ref{fields}.
+The AIRS-parent CHIRP channels are a subset of the CrIS-parent
+channels.  The \texttt{wnum} grid is used for both, with missing
+AIRS-parent channels flagged as bad.  This is discussed in more
+detail in section \ref{qcnedn}.  The parent AIRS and CrIS radiance
+data are organized as a sequence of granule files, ordered by scan
+geometery and observation time.  See section \ref{sampling} for
+details.  CHIRP granules correspond with their parent AIRS or CrIS
+granules, and inherit most of the parent granule's attributes and
+supporting data.  The stand-alone nature of the CHIRP obs requires
+some duplication of information---for example the CrIS-parent data
+includes the FOV number for every obs---but the overhead for this is
+small in comparison with the space required for the radiance data.
+
+%------------- old text --------------
+%
+% AIRS L1c and CrIS L1b radiance data are organized as a sequence of
+% granule files, ordered by scan geometery and observation time.
+% CHIRP granules correspond with their parent AIRS or CrIS granules,
+% and inherit most of the parent granule's attributes and supporting
+% data.  CHIRP granules follow JPL conventions for field names and
+% attributes, and are saved in netCDF.  There are 1679 CHIRP channels,
+% described in detail in section \ref{rad}.  A CHIRP observation, or
+% ``obs'' for short, is a 1679-channel radiance vector with associated
+% values for time, FOV (for CrIS), original indices for AIRS or CrIS,
+% along with most of the geolocation, support data, and product
+% attributes from the parent sounders.  This involves some duplication
+% of information for the individual obs, but the overhead for this is
+% small in comparison with the radiance data.  The key idea is that
+% each obs can stand alone as a largely self-sufficient unit of
+% information.  CHIRP data is then a list of such obs.  The CHIRP data
+% is organized as an $1679 \times 12150$ array, channels by obs, in
+% time order, while most of the supporting data is organized as
+% $12150$-vectors.  The choice of 12150 obs per granule is discussed
+% in section \ref{sampling}.
 
 %----------- section --------------------------------------------------%
 \section{Radiances}
@@ -143,7 +226,7 @@ apodization.
 
 For CrIS-parent CHIRP, we interpolate the CrIS Full Spectral
 Resolution (FSR) product, with an $0.8$ {\cm} {\opd} for all three
-bands, to the CHIRP grid and then apply Hamming apodization.  The
+bands, to the CHIRP grid, and then apply Hamming apodization.  The
 CrIS-parent CHIRP ILS is then a Hamming-apodized sinc for a $0.8$
 {\cm} {\opd} in the LW, $0.6$ {\cm} in the MW, and $0.4$ {\cm} in
 the SW.  Figure \ref{fig3} shows this ILS for a typical CHIRP MW
@@ -236,19 +319,21 @@ the CrIS FOV grouping.
 
 The AIRS L1c scan geometery is organized as 90 cross-track by 135
 along-track observations, giving $90 \times 135 = 12150$ obs per
-granule.  The CrIS L1b scan geometery is organized as 9 FOVs
-arranged in a $3 \times 3$ field of regard (FOR), giving 9
-simultaneous observations.  There are 30 cross-track FOR looks and
-45 along-track FOR steps.  So again we have $9 \times 30 \times 45 =
-12150$ obs per granule.  Figure \ref{fig7} shows the relationship of
-the CrIS FOVs and FOR as the scan moves from nadir to limb.  Due to
-this rotation, we can't treat the CrIS data as a simple cross-track
-by along-track grid, as with the AIRS, for example for imaging.
-CHIRP provides both AIRS- and CrIS-style indexing for all products,
-AIRS-style indexing in the fields \texttt{airs\_xtrack} and
-\texttt{airs\_atrack}, and CrIS-style indexing, where xtrack and
-atrack are FOR rather than FOV indices, in the fields
-\texttt{xtrack}, \texttt{atrack} and \texttt{fov\_num}.
+granule.  The CrIS L1b scan geometery is organized as 9 FOVs arranged
+in a $3 \times 3$ field of regard (FOR), giving 9 simultaneous
+observations.  There are 30 cross-track FOR looks and 45 along-track
+FOR steps.  So again we have $9 \times 30 \times 45 = 12150$ obs per
+granule.  Figure \ref{fig7} shows the relationship of the CrIS FOVs
+and FOR as the scan moves from nadir to limb.  Note that the FOVs
+rotate withing the FOR as we move toward the limbs.  CHIRP provides
+both AIRS- and CrIS-style indexing, the AIRS-style indexing in the
+fields \texttt{airs\_xtrack} and \texttt{airs\_atrack}, and
+CrIS-style indexing, where xtrack and atrack are FOR rather than FOV
+indices, in the fields \texttt{xtrack}, \texttt{atrack} and
+\texttt{fov\_num}.  However due to the FOR rotation, we can't treat
+the CrIS-parent data as a simple cross-track by along-track grid, as
+with the AIRS-parent, for example for imaging.
+
 
 %----------- section --------------------------------------------------%
 \section{Quality Control and NEdN Estimates}
@@ -287,22 +372,22 @@ AIRS L1c doesn't have a warn flag.
 
 As an alternative to a warn flag, and to fill band gaps, AIRS L1c
 provides synthetic values for some observations and channels.  That
-is, for a particular observation--a radiance vector with an
-associated time, geolocation, et cetera---some of the channels may
-be synthetic.  Some of these channels are synthetic only
-occasionally, others more frequently, and some are always synthetic.
-These are all flagged in the L1c file for every observation and
-channel.  In addition, the granule file has a per-granule summary,
-L1cNumSynth, for each L1c channel.  This is the number of times the
-channel was filled with a synthetic value.  L1cNumSynth can range
-from zero, for no synthetic values, to 12150, for all synthetic.
-Figure \ref{fig8} shows the sum of all synthetic values by channel,
-for 5036 consecutive AIRS granules, approximately 21 days of data.
-Counts are shown on a log scale.  Figure \ref{fig9} shows the same
-data as synthetic values per channel, sorted by number of synthetic
-values.  This shows the wide range of values, from few or no
-synthetic values for some channels, to entirely synthetic values for
-others.
+is, for a particular observation---a radiance vector with an
+associated time, geolocation, and support data---some of the
+channels may be synthetic.  Some of these channels are synthetic
+only occasionally, others more frequently, and some are always
+synthetic.  These synthetic channels are flagged in the L1c file,
+for every observation and channel.  In addition, the granule file
+has a per-granule summary, L1cNumSynth, for each L1c channel.  This
+is the number of times the channel was filled with a synthetic
+value.  L1cNumSynth can range from zero, for no synthetic values, to
+12150, for all synthetic.  Figure \ref{fig8} shows the sum of all
+synthetic values by channel, for 5036 consecutive AIRS granules,
+approximately 21 days of data.  Counts are shown on a log scale.
+Figure \ref{fig9} shows the same data as synthetic values per
+channel, sorted by number of synthetic values.  This shows the wide
+range of values, from few or no synthetic values for some channels,
+to entirely synthetic values for others.
 
 For some applications we may not want a significant synthetic
 component.  The CHIRP field \texttt{synth\_frac} provides the AIRS
@@ -318,8 +403,10 @@ synthetic component.  Figure \ref{fig11} show the AIRS-parent CHIRP
 synthetic fraction, sorted by synthetic fraction magnitude.  This
 shows the variability of \texttt{synth\_frac}.  If
 $\hbox{\texttt{synth\_frac}} > 0.25$, we set \texttt{chan\_qc} to
-warn.  The threshold $0.25$ is a parameter that can be changed in
-the production YAML specs.
+warn.
+
+% The threshold $0.25$ is a parameter that can be changed in the
+% production YAML specs.
 
 \begin{figure}
   \centering
@@ -373,7 +460,7 @@ the production YAML specs.
   \caption{Sample CHIRP {\nedn} for AIRS and CrIS parent data, for
     the granules shown in figure \ref{fig12}.  The noise is
     significantly less for the translations.}
-  \label{fig12}
+  \label{fig13}
 \end{figure}
 
 \subsection{AIRS-parent CHIRP NEdN}
@@ -393,7 +480,7 @@ for this case are a matter for future work.
 
 Figure \ref{fig12} shows typical values for AIRS and CrIS {\nedn}
 for 2018 doy 231 granules 25 and 21, respectively; two relatively
-warm granules.  Figure \ref{fig12} shows the corresponding CHIRP
+warm granules.  Figure \ref{fig13} shows the corresponding CHIRP
 {\nedn} for AIRS and CrIS parent data, for the same granules.
 The noise is significantly less for the translation.  This to be
 expected since both apodization and down-interpolation reduce noise.
@@ -462,40 +549,65 @@ typical granule file names for AIRS AQUA, CrIS SNPP, and CrIS J1
 \texttt{~~1~~~~~2~~~~~3~~~~~~~~4~~~~~~~~~5~~~~6~~~~7~~~~8~~~~9~~~10~~~~~~11~~~~~12} \\
 \end{center}
 
-The 12 fields correpsond to CHIRP attributes, and are defined in
-more detail in section \ref{attrs}.  Field 7, the
-\texttt{product\_name\_type\_id}, is of particular interest.  The
-sub-fields AQ, SN, and J1 are two letter codes for AIRS AQUA, CrIS
-Sunomi NPP, and CrIS J1 (aka NOAA-20), respectively.  This is the
-parent sounder for the granule.  A suffix ``CAL'', for example
-L1\_AQ\_CAL, L1\_NP\_CAL, or L1\_J1\_CAL, indicates a support
-product, while no suffix (as in the examples above) indicates the
-primary CHIRP product.
+The 12 fields correpsond to CHIRP attributes, and are defined in the
+table below.  Field 7, the \texttt{product\_name\_type\_id}, is of
+particular interest.  The sub-fields AQ, SN, and J1 are two letter
+codes for AIRS AQUA, CrIS Sunomi NPP, and CrIS J1 (aka NOAA-20),
+respectively.  This is the parent sounder for the granule.  A suffix
+``CAL'', for example L1\_AQ\_CAL, L1\_NP\_CAL, or L1\_J1\_CAL,
+indicates a support product, while no suffix (as in the examples
+above) indicates the primary CHIRP product.
 
+{\footnotesize
 \begin{center}
-\begin{tabular}{ m{1.4cm} m{10cm} }
-  Field & Attribute Name \\
-   1 & \texttt{product\_name\_project} \\
-   2 & \texttt{product\_name\_platform} \\
-   3 & \texttt{product\_name\_instr} \\
-   4 & \texttt{gran\_id} \\
-   5 & \texttt{product\_name\_duration} \\
-   6 & \texttt{product\_name\_granule\_number} \\
-   7 & \texttt{product\_name\_type\_id} \\
-   8 & \texttt{product\_name\_variant} \\
-   9 & \texttt{product\_name\_version} \\
-  10 & \texttt{product\_name\_producer} \\
-  11 & \texttt{product\_name\_timestamp} \\
-  12 & \texttt{product\_name\_extension} \\
+\begin{tabular}{|m{7mm}|m{5.5cm}|m{8cm}| }
+  \hline
+  Field & Attribute Name & Comment \\
+  \hline\hline
+   1 & \texttt{product\_name\_project} & Always ``SNDR'', for Sounder
+   SIPS \\
+   \hline
+   2 & \texttt{product\_name\_platform} & Always ``SS1330'', a virtual
+   platform in a 13:30 Sun-Synchronous polar orbit\\
+   \hline
+   3 & \texttt{product\_name\_instr} & Always “CHIRP” \\
+   \hline
+   4 & \texttt{gran\_id} & Granule start time \\
+   \hline
+   5 & \texttt{product\_name\_duration} & Always ``m06'' meaning 6
+   minutes \\
+   \hline
+   6 & \texttt{product\_name\_granule\_number} & Granule number from
+   g001 – g240 \\
+   \hline
+   7 & \texttt{product\_name\_type\_id} & ``L1\_'' + PL [+
+     ``\_CAL''], where PL platform code can be ``AQ'', ``SN'', or
+   ``J1''.  The optional tag ``\_CAL'' marks redundant calibration
+   data, not considered part of the main CHIRP product. \\
+   \hline
+   8 & \texttt{product\_name\_variant} & Always ``std''\\
+   \hline
+   9 & \texttt{product\_name\_version} & For example ``V02\_48'' for
+   version 02.48 \\
+   \hline
+   10 & \texttt{product\_name\_producer} & ``G'' for data produced by NASA GSFC\\
+   \hline
+   11 & \texttt{product\_name\_timestamp} & Processing timestamp \\
+   \hline
+   12 & \texttt{product\_name\_extension} & Always ``.nc'' \\
+   \hline
 \end{tabular}
 \end{center}
-
-\section{Field Definitions}
+}
 
 % small sizes: \tiny \scriptsize \footnotesize \small
 
-{\scriptsize
+\section{Field Definitions}
+\label{fields}
+{\footnotesize
 \input{field_tables/chirp_1330.dims_t.tex}
+}
+{\scriptsize
 \input{field_tables/chirp_1330_var_t.tex}
 \input{field_tables/chirp_1330.attrs_t.tex}
 }
