@@ -5,6 +5,8 @@
 user_guide: user_guide.pdf
 
 user_guide.pdf: user_guide.tex crisdefs.tex figures/*.pdf \
+	field_tables/chirp_1330.attrs_t.tex \
+	field_tables/chirp_1330_var_t.tex \
 	figures/*.png user_guide.bib Makefile
 	pdflatex user_guide.tex -interaction nonstopmode && \
 	bibtex user_guide && \
