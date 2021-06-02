@@ -1,4 +1,11 @@
-\documentclass[11pt]{article}
+%DIF 1c1
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL user_guide.tex   Wed Jun  2 15:41:42 2021
+%DIF ADD lls.tex          Wed Jun  2 15:35:50 2021
+%DIF < \documentclass[12pt]{article}
+%DIF -------
+\documentclass[11pt]{article} %DIF > 
+%DIF -------
 \usepackage[margin=1in]{geometry}
 \usepackage{subcaption}
 \usepackage{graphicx}
@@ -12,16 +19,18 @@
 \usepackage{lineno}
 
 \input{crisdefs.tex}
-
-\usepackage[T1]{fontenc}
-\usepackage[expert,altbullet]{lucidabr}
-
-\usepackage[colorlinks=true,
-            linkcolor=blue,
-            urlcolor=blue,
-            citecolor=blue,
-            linkbordercolor={0.8 0.8 0.8},
-            menubordercolor={0 1 0}]{hyperref}
+%DIF 15a15-24
+ %DIF > 
+\usepackage[T1]{fontenc} %DIF > 
+\usepackage[expert,altbullet]{lucidabr} %DIF > 
+ %DIF > 
+\usepackage[colorlinks=true, %DIF > 
+            linkcolor=blue, %DIF > 
+            urlcolor=blue, %DIF > 
+            citecolor=blue, %DIF > 
+            linkbordercolor={0.8 0.8 0.8}, %DIF > 
+            menubordercolor={0 1 0}]{hyperref} %DIF > 
+%DIF -------
 
 \newcommand {\radunits} {\hbox{mW sr$^{-1}$ m$^{-2}$}}
 
@@ -30,16 +39,101 @@
 }
 \author{H.~E.~Motteler and L.~L.~Strow \\
   \\
-  University of Maryland Baltimore County (UMBC)\\
-  Joint Center for Earth Systems Technology \\
-  Atmospheric Spectroscopy Lab \\
+  \DIFdelbegin \DIFdel{UMBC Atmospheric Spectroscopy Lab }\DIFdelend \DIFaddbegin \DIFadd{University of Maryland Baltimore County (UMBC)}\DIFaddend \\
+  Joint Center for Earth Systems Technology \DIFaddbegin \\
+  \DIFadd{Atmospheric Spectroscopy Lab }\DIFaddend \\
 }
 \date{\today}
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFaddtex}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdeltex}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF HYPERREF PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{\texorpdfstring{\DIFaddtex{#1}}{#1}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{\texorpdfstring{\DIFdeltex{#1}}{}} %DIF PREAMBLE
+\newcommand{\DIFscaledelfig}{0.5}
+%DIF HIGHLIGHTGRAPHICS PREAMBLE %DIF PREAMBLE
+\RequirePackage{settobox} %DIF PREAMBLE
+\RequirePackage{letltxmacro} %DIF PREAMBLE
+\newsavebox{\DIFdelgraphicsbox} %DIF PREAMBLE
+\newlength{\DIFdelgraphicswidth} %DIF PREAMBLE
+\newlength{\DIFdelgraphicsheight} %DIF PREAMBLE
+% store original definition of \includegraphics %DIF PREAMBLE
+\LetLtxMacro{\DIFOincludegraphics}{\includegraphics} %DIF PREAMBLE
+\newcommand{\DIFaddincludegraphics}[2][]{{\color{blue}\fbox{\DIFOincludegraphics[#1]{#2}}}} %DIF PREAMBLE
+\newcommand{\DIFdelincludegraphics}[2][]{% %DIF PREAMBLE
+\sbox{\DIFdelgraphicsbox}{\DIFOincludegraphics[#1]{#2}}% %DIF PREAMBLE
+\settoboxwidth{\DIFdelgraphicswidth}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\settoboxtotalheight{\DIFdelgraphicsheight}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\scalebox{\DIFscaledelfig}{% %DIF PREAMBLE
+\parbox[b]{\DIFdelgraphicswidth}{\usebox{\DIFdelgraphicsbox}\\[-\baselineskip] \rule{\DIFdelgraphicswidth}{0em}}\llap{\resizebox{\DIFdelgraphicswidth}{\DIFdelgraphicsheight}{% %DIF PREAMBLE
+\setlength{\unitlength}{\DIFdelgraphicswidth}% %DIF PREAMBLE
+\begin{picture}(1,1)% %DIF PREAMBLE
+\thicklines\linethickness{2pt} %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\framebox(1,1){}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\line( 1,1){1}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,1){\line(1,-1){1}}}% %DIF PREAMBLE
+\end{picture}% %DIF PREAMBLE
+}\hspace*{3pt}}} %DIF PREAMBLE
+} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbegin}{\DIFaddbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddend}{\DIFaddend} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbegin}{\DIFdelbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelend}{\DIFdelend} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbegin}{\DIFOaddbegin \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbegin}{\DIFOdelbegin \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbeginFL}{\DIFaddbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddendFL}{\DIFaddendFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbeginFL}{\DIFdelbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelendFL}{\DIFdelendFL} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbeginFL}{\DIFOaddbeginFL \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbeginFL}{\DIFOdelbeginFL \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+%DIF LISTINGS PREAMBLE %DIF PREAMBLE
+\RequirePackage{listings} %DIF PREAMBLE
+\RequirePackage{color} %DIF PREAMBLE
+\lstdefinelanguage{DIFcode}{ %DIF PREAMBLE
+%DIF DIFCODE_UNDERLINE %DIF PREAMBLE
+  moredelim=[il][\color{red}\sout]{\%DIF\ <\ }, %DIF PREAMBLE
+  moredelim=[il][\color{blue}\uwave]{\%DIF\ >\ } %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstdefinestyle{DIFverbatimstyle}{ %DIF PREAMBLE
+	language=DIFcode, %DIF PREAMBLE
+	basicstyle=\ttfamily, %DIF PREAMBLE
+	columns=fullflexible, %DIF PREAMBLE
+	keepspaces=true %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim}{\lstset{style=DIFverbatimstyle}}{} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim*}{\lstset{style=DIFverbatimstyle,showspaces=true}}{} %DIF PREAMBLE
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
 \begin{document}
 \maketitle
 
-\tableofcontents
-%\linenumbers
+\DIFdelbegin %DIFDELCMD < \linenumbers
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \tableofcontents
+%DIF > \linenumbers
+\DIFaddend 
 
 %----------- section --------------------------------------------------%
 \section{Introduction}
@@ -85,14 +179,15 @@ The CHIRP record starts with AIRS data from Fall 2002, and will cross over
 to CrIS SNPP and then CrIS J1 (aka NOAA-20) as shown in figure \ref{fig0}.
 This is planned to continue in the future with NOAA-21, 22, etc., with
 sounder crossover dates to be determined.  These sounders share an
-ascending 1:30 PM (13:30) equatorial crossing time and are combined as
-shown in \ref{fig0} to make the CHIRP-1330 product.  Although the primary
+ascending 1:30 PM (13:30) equatorial crossing time and are combined \DIFaddbegin \DIFadd{as
+shown in \ref{fig0} }\DIFaddend to make the CHIRP-1330 product.  Although the primary
 product is a single continuous record, support products in the form of
 translations for other NOAA sounders are also provided as CHIRP-CAL
-products.  Using these support product users can create radiance time
+products.  \DIFaddbegin \DIFadd{Using these support product users can create radiance time
 series that cross over from one instrument to the next at different times
-than the CHIRP-1330 product, as long as the CHIRP-CAL product exists for
-the desired times.
+than the }\DIFaddend CHIRP-1330 \DIFdelbegin \DIFdel{is made available
+by JPL Sounder SIPS as a product at the GSFC-DISC}\DIFdelend \DIFaddbegin \DIFadd{product, as long as the CHIRP-CAL product exists for
+the desired times}\DIFaddend .
 
 Section \ref{format} is a short introduction to using the CHIRP data.
 This is followed by sections with more detail on radiances, sampling,
@@ -149,14 +244,14 @@ degrees east.
 
 \end{itemize}
 
-The organization of other support variables is generally similar, and
+The organization of other support variables \DIFaddbegin \DIFadd{is }\DIFaddend generally similar, and
 all CHIRP fields and attributes are defined in appendix \ref{fields}.
 The AIRS-parent CHIRP channels are a subset of the CrIS-parent
 channels.  The \texttt{wnum} grid is used for both, with missing
 AIRS-parent channels flagged as bad.  This is discussed in more
 detail in section \ref{qcnedn}.  The parent AIRS and CrIS radiance
 data are organized as a sequence of granule files, ordered by scan
-geometry and observation time.  See section \ref{sampling} for
+\DIFdelbegin \DIFdel{geometery }\DIFdelend \DIFaddbegin \DIFadd{geometry }\DIFaddend and observation time.  See section \ref{sampling} for
 details.  CHIRP granules correspond with their parent AIRS or CrIS
 granules, and inherit most of the parent granule's attributes and
 supporting data.  The stand-alone nature of the CHIRP obs requires
@@ -311,7 +406,7 @@ with missing channels flagged as described in section \ref{qcnedn}.
 \begin{figure} % source plot_tbin.m
   \centering
   \includegraphics[width=0.9\linewidth]{figures/cris_for_2.png}
-  \caption{CrIS scan geometry, from the NOAA User's Guide \cite{ntech1}}
+  \caption{CrIS scan \DIFdelbeginFL \DIFdelFL{geometery}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{geometry}\DIFaddendFL , from the NOAA User's Guide \cite{ntech1}}
   \label{fig7}
 \end{figure}
 
@@ -331,9 +426,9 @@ scan widths, while the lower is a near-nadir detail.  The general
 agreement is quite good, and the main difference we see is due to
 the CrIS FOV grouping.
 
-The AIRS L1c scan geometry is organized as 90 cross-track by 135
+The AIRS L1c scan \DIFdelbegin \DIFdel{geometery }\DIFdelend \DIFaddbegin \DIFadd{geometry }\DIFaddend is organized as 90 cross-track by 135
 along-track observations, giving $90 \times 135 = 12150$ obs per
-granule.  The CrIS L1b scan geometry is organized as 9 FOVs arranged
+granule.  The CrIS L1b scan \DIFdelbegin \DIFdel{geometery }\DIFdelend \DIFaddbegin \DIFadd{geometry }\DIFaddend is organized as 9 FOVs arranged
 in a $3 \times 3$ field of regard (FOR), giving 9 simultaneous
 observations.  There are 30 cross-track FOR looks and 45 along-track
 FOR steps.  So again we have $9 \times 30 \times 45 = 12150$ obs per
@@ -514,14 +609,16 @@ to take into account the interpolation and apodization.  These are
    \item MW, 0.5455, for interpolation and Hamming apodization
    \item SW, 0.4446, for interpolation and Hamming apodization
 \end{itemize}
+\DIFaddbegin 
 
-\section{Getting Help}
-Further information and help on using CHIRP can be found at
-\href{https://infraredclimate.org}{https://infraredclimate.org}, or send
-email to \href{mailto:chirp@infraredclimate.org}{chirp@infraredclimate.org}.
+\section{\DIFadd{Getting Help}}
+\DIFadd{Further information and help on using CHIRP can be found at
+}\href{https://infraredclimate.org}{https://infraredclimate.org}\DIFadd{, or send
+email to }\href{mailto:chirp@infraredclimate.org}{chirp@infraredclimate.org}\DIFadd{.
 This web site will also contain information on the Level 1b products
 produced at GES-DIS for the series of CrIS instruments, starting with
 SNPP-CrIS and continued with the JPSS series of CrIS instruments.
+}\DIFaddend 
 
 
 %----------- section --------------------------------------------------%
