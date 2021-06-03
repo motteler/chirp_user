@@ -88,11 +88,13 @@ sounder crossover dates to be determined.  These sounders share an
 ascending 1:30 PM (13:30) equatorial crossing time and are combined as
 shown in \ref{fig0} to make the CHIRP-1330 product.  Although the primary
 product is a single continuous record, support products in the form of
-translations for other NOAA sounders are also provided as CHIRP-CAL
-products.  Using these support product users can create radiance time
-series that cross over from one instrument to the next at different times
-than the CHIRP-1330 product, as long as the CHIRP-CAL product exists for
-the desired times.
+translations for other NOAA sounders and times are also provided as
+CHIRP-CAL products.  These support product allow users to create radiance
+time series that cross over from one instrument to the next at different
+times than the CHIRP-1330 product, as long as the CHIRP-CAL product exists
+for the desired times.  For example, a valid time series could use AIRS
+parent radiances until AIRS ceases operation, and then switch directly to
+CrIS J1 (NOAA-20).
 
 Section \ref{format} is a short introduction to using the CHIRP data.
 This is followed by sections with more detail on radiances, sampling,
@@ -101,6 +103,17 @@ all variables and attributes.  For more detail on the AIRS to CHIRP
 translation, see reference \cite{mott2018}, and for more on bias
 adjustments and questions of long-term stability, see reference
 \cite{strow2021a}.
+
+%----------- section --------------------------------------------------%
+\section{Further Information on CHIRP}
+Further information and help on using CHIRP, beyond what is discussed
+below, can be found at
+\href{https://infraredclimate.org}{https://infraredclimate.org}, or send
+email to
+\href{mailto:chirp@infraredclimate.org}{chirp@infraredclimate.org}.  This
+web site will also contain information on the Level 1b products produced at
+GES-DIS for the series of CrIS instruments, starting with SNPP-CrIS and
+continued with the JPSS series of CrIS instruments.
 
 %----------- section --------------------------------------------------%
 \section{Quick Start}
@@ -323,7 +336,7 @@ days.  Note that 227 and 233 are both prime; there are no common
 factors and so no repeating subpatterns.  Figure \ref{fig4} shows
 global values for satellite subpoint for one day of AIRS and CrIS
 data, and figure \ref{fig5} for 16 days, the full period before any
-repeated postitions, for the Caribbean.  AIRS and CrIS are
+repeated positions, for the Caribbean.  AIRS and CrIS are
 cross-track scanners, and in addition to subpoint tracks we want to
 compare the scan geometry.  Figure \ref{fig6} shows the secant of
 zenith angles for AIRS and CrIS.  The upper plot is for the full
@@ -353,7 +366,7 @@ with the AIRS-parent, for example for imaging.
 \section{Quality Control and NEdN Estimates}
 \label{qcnedn}
 
-CHIRP Quality Control (QC) is straighforward.  There are two QC
+CHIRP Quality Control (QC) is straightforward.  There are two QC
 fields per granule, \texttt{rad\_qc}, a 12150-vector with one flag
 per obs, and \texttt{chan\_qc}, a 1679-vector with one flag per
 channel.  For both vectors, 0 = OK, 1 = warn, and 2 = bad.  For
@@ -368,7 +381,7 @@ subset of the 1679 channels from the CrIS translation.
 For AIRS-parent CHIRP the 1679-element vector \texttt{chan\_qc} is
 set to 2 (bad) for those channels that are not part of the 1483
 channel set, as translated from AIRS.  This is a compromise that
-give us a single freqency grid for CHIRP, regardless of the parent
+give us a single frequency grid for CHIRP, regardless of the parent
 sounder.  If we begin by choosing a set of channels to work with
 AIRS-parent data, we can continue using that set with the change to
 CrIS-parent, with no changes in our indexing.  In addition to
@@ -515,15 +528,6 @@ to take into account the interpolation and apodization.  These are
    \item SW, 0.4446, for interpolation and Hamming apodization
 \end{itemize}
 
-\section{Getting Help}
-Further information and help on using CHIRP can be found at
-\href{https://infraredclimate.org}{https://infraredclimate.org}, or send
-email to \href{mailto:chirp@infraredclimate.org}{chirp@infraredclimate.org}.
-This web site will also contain information on the Level 1b products
-produced at GES-DIS for the series of CrIS instruments, starting with
-SNPP-CrIS and continued with the JPSS series of CrIS instruments.
-
-
 %----------- section --------------------------------------------------%
 \bibliographystyle{abbrv}
 \bibliography{user_guide}
@@ -572,7 +576,7 @@ typical granule file names for AIRS AQUA, CrIS SNPP, and CrIS J1
 \texttt{~~1~~~~~2~~~~~3~~~~~~~~4~~~~~~~~~5~~~~6~~~~7~~~~8~~~~9~~~10~~~~~~11~~~~~12} \\
 \end{center}
 
-The 12 fields correpsond to CHIRP attributes, and are defined in the
+The 12 fields correspond to CHIRP attributes, and are defined in the
 table below.  Field 7, the \texttt{product\_name\_type\_id}, is of
 particular interest.  The sub-fields AQ, SN, and J1 are two letter
 codes for AIRS AQUA, CrIS Sunomi NPP, and CrIS J1 (aka NOAA-20),
