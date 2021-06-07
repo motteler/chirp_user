@@ -15,7 +15,7 @@ Name & Type & Dim & Description & Units & Ancillary
 obs\_id & string & obs & unique earth view observation identifier. &
 &\tabularnewline\hline
 obs\_time\_tai93 & double & obs & earth view observation midtime for
-each FOV & seconds since 1993-01-01 00:00 & bnds\tabularnewline\hline
+each FOV & seconds since 1993-01-01 00:00 & \tabularnewline\hline
 obs\_time\_utc & uint16 & obs, utc\_tuple & UTC earth view observation
 time as an array of integers: year, month, day, hour, minute, second,
 millisec, microsec & &\tabularnewline\hline
@@ -68,7 +68,7 @@ utc\_tuple\_lbl & string & utc\_tuple & names of the elements of UTC
 when it is expressed as an array of integers
 year, month, day, hour, minute, second, millisecond, microsecond &
 &\tabularnewline\hline
-rad & float32 & obs, wnum & spectral radiance & mW/(m2 sr cm-1) & err,
+rad & float32 & obs, wnum & spectral radiance & mW/(m2 sr cm-1) & 
 qc\tabularnewline\hline
 synth\_frac & float32 & wnum & File mean fraction of signal that is
 attributed to synthesized AIRS Level-1C values & unitless
@@ -78,14 +78,14 @@ mW/(m2 sr cm-1) &\tabularnewline\hline
 atrack & ubyte & obs & Along-track index of Field Of Regard & unitless
 &\tabularnewline\hline
 xtrack & ubyte & obs & Cross-track index of Field Of Regard & unitless &
-bnds\tabularnewline\hline
+\tabularnewline\hline
 fov\_num & ubyte & obs & Field Of View number in FOR & unitless
 &\tabularnewline\hline
 airs\_atrack & ubyte & obs & AIRS-like along-track index of Field Of
 View & unitless &\tabularnewline\hline
 airs\_xtrack & ubyte & obs & AIRS-like cross-track index of Field Of
 View & unitless &\tabularnewline\hline
-wnum & float64 & wnum & wavenumber & cm-1 & bnds\tabularnewline
+wnum & float64 & wnum & wavenumber & cm-1 & \tabularnewline
 \hline
 \end{xltabular}
 \end{center}

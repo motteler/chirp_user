@@ -637,8 +637,18 @@ above) indicates the primary CHIRP product.
 }
 {\scriptsize
 \input{field_tables/chirp_1330_var_t.tex}
+\newpage  % this may need to move or be removed with reformats
 \input{field_tables/chirp_1330.attrs_t.tex}
 }
+
+\section{Errata}
+
+In release v02\_48, the variable \texttt{asc\_flag} is defined as
+1 for an ascending and 0 for a descending orbit.  However for the
+AIRS parent data, this flag still contains the AIRS values `A' for
+ascending, `D' for descending, and `E' when an error is encountered
+in trying to determine a value.  This is fixed in subsequent
+releases.
 
 \end{document}
 

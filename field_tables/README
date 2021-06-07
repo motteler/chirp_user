@@ -1,4 +1,21 @@
 
+The following tables are included in user_guide.tex
+
+    field_tables/chirp_1330.dims_t.tex
+    field_tables/chirp_1330_var_t.tex
+    field_tables/chirp_1330.attrs_t.tex
+ 
+These are produced from the html, from Evan, as follows:
+
+pandoc --from=html --to=latex --output=chirp_1330_var.tex \
+  chirp_1330_var.html
+
+then chirp_1330_var.tex is edited to produce chirp_1330_var_t.tex.
+The main changes are a different header and adding \hline after
+\tabularnewline
+
+----
+
 Evan's 18 Dec 2020 email:
 
 Howard,
