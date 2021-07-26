@@ -82,20 +82,21 @@ adjustment is applied to the other translations \cite{strow2021a}.
   \label{fig0}
 \end{figure}
 
-The CHIRP record starts with AIRS data from Fall 2002, and will cross over
-to CrIS SNPP and then CrIS J1 (aka NOAA-20) as shown in figure \ref{fig0}.
-This is planned to continue in the future with NOAA-21, 22, etc., with
-sounder crossover dates to be determined.  These sounders share an
-ascending 1:30 PM (13:30) equatorial crossing time and are combined as
-shown in \ref{fig0} to make the CHIRP-1330 product.  Although the primary
-product is a single continuous record, support products in the form of
-translations for other NOAA sounders and times are also provided as
-CHIRP-CAL products.  These support product allow users to create radiance
-time series that cross over from one instrument to the next at different
-times than the CHIRP-1330 product, as long as the CHIRP-CAL product exists
-for the desired times.  For example, a valid time series could use AIRS
-parent radiances until AIRS ceases operation, and then switch directly to
-CrIS J1 (NOAA-20).
+The CHIRP record starts with AIRS data from Fall 2002, and crosses
+over to CrIS SNPP and then CrIS J1 (aka NOAA-20) as shown in figure
+\ref{fig0}.  This is planned to continue in the future with NOAA-21,
+22, etc., with sounder crossover dates to be determined.  These
+sounders share an ascending 1:30 PM (13:30) equatorial crossing time
+and are combined to make the CHIRP-1330 product.  Although the
+primary product is a single continuous record, support products in
+the form of translations for other NOAA sounders are also provided
+as CHIRP-CAL products.  These support products allow users to create
+radiance time series that cross over from one instrument to the next
+at different times than CHIRP-1330, as long as the CHIRP-CAL product
+exists for the desired times.  For example, a valid time series
+could use AIRS parent radiances until AIRS ceases operation, and
+then switch directly to CrIS J1 (NOAA-20).  SNPP's usefulness for a
+CHIRP CAL product ended on 25 May 2019 with the side 1 MW failure.
 
 Section \ref{format} is a short introduction to using the CHIRP data.
 This is followed by sections with more detail on radiances, sampling,
@@ -104,6 +105,11 @@ all variables and attributes.  For more detail on the AIRS to CHIRP
 translation, see reference \cite{mott2018}, and for more on bias
 adjustments and questions of long-term stability, see reference
 \cite{strow2021a}.
+CrIS data used for CHIRP is from the standard full spectral
+resolution (FSR) CrIS L1b product \cite{cris:user}, while AIRS data
+is from the AIRS L1c product \cite{a1c:user}.  The latter includes
+synthetic channels and other significant improvements over the AIRS
+L1b data.
 
 %----------- section --------------------------------------------------%
 \section{Quick Start}
@@ -232,7 +238,7 @@ interferometer with an {\opd} of $0.8$ {\cm} in the long-wave (LW),
 $0.6$ {\cm} in the medium-wave (MW), and $0.4$ {\cm} in the
 short-wave (SW) bands, with Hamming apodization applied to each band.
 The MW and SW resolutions are lower than the CrIS-parent FSR {\opd}
-of $0.8$ {\cm}, and were chosen to to give an approximate match to
+of $0.8$ {\cm}, and were chosen to give an approximate match to
 the AIRS resolution for those bands.  Figure \ref{fig1} shows
 typical AIRS and AIRS-parent CHIRP BT spectra, the granule means for
 19 Aug 2018 granule 25.  The CHIRP bands are the intersection of the
@@ -334,15 +340,15 @@ scan widths, while the lower is a near-nadir detail.  The general
 agreement is quite good, and the main difference we see is due to
 the CrIS FOV grouping.
 
-The AIRS L1c scan geometry is organized as 90 cross-track by 135
+The AIRS scan geometry is organized as 90 cross-track by 135
 along-track observations, giving $90 \times 135 = 12150$ obs per
-granule.  The CrIS L1b scan geometry is organized as 9 FOVs arranged
+granule.  The CrIS scan geometry is organized as 9 FOVs arranged
 in a $3 \times 3$ field of regard (FOR), giving 9 simultaneous
 observations.  There are 30 cross-track FOR looks and 45 along-track
 FOR steps.  So again we have $9 \times 30 \times 45 = 12150$ obs per
 granule.  Figure \ref{fig7} shows the relationship of the CrIS FOVs
 and FOR as the scan moves from nadir to limb.  Note that the FOVs
-rotate withing the FOR as we move toward the limbs.  CHIRP provides
+rotate within the FOR as we move toward the limbs.  CHIRP provides
 both AIRS- and CrIS-style indexing, the AIRS-style indexing in the
 fields \texttt{airs\_xtrack} and \texttt{airs\_atrack}, and
 CrIS-style indexing, where xtrack and atrack are FOR rather than FOV
@@ -362,8 +368,8 @@ per obs, and \texttt{chan\_qc}, a 1679-vector with one flag per
 channel.  For both vectors, 0 = OK, 1 = warn, and 2 = bad.  For
 CrIS-parent CHIRP these fields are a summary of the parent product
 state.  For AIRS-parent CHIRP the situation is more complex, due to
-a significant and variable number of AIRS synthetic channels, and
-because the set of 1483 channels from the AIRS translation are a
+a significant and variable number of AIRS L1c synthetic channels,
+and because the set of 1483 channels from the AIRS translation are a
 subset of the 1679 channels from the CrIS translation.
 
 \subsection{AIRS-parent CHIRP QC}
@@ -383,7 +389,8 @@ The 12150-element vector \texttt{rad\_qc} has a flag for each obs.
 These are set to 0 (OK) if the L1c field \texttt{instrument\_state}
 is OK and radiance and geo values pass some basic sanity checks.
 \texttt{rad\_qc} is always 0 or 2 for AIRS-parent CHIRP, because
-AIRS L1c doesn't have a warn flag.
+AIRS L1c does not have a warn flag and our added sanity checks are
+strictly pass/fail.
 
 \subsection{AIRS Synthetic Channels}
 
@@ -411,14 +418,14 @@ component.  The CHIRP field \texttt{synth\_frac} provides the AIRS
 synthetic component for each CHIRP channel.  This can range from
 zero, for no synthetic component, to one, for entirely synthetic.
 To get this value we linearize the AIRS to CrIS translation and
-apply it to the AIRS L1cNumSynth, to get a corresponding NumSynth
-value for CHIRP.  This is normalized as a fraction and becomes the
-CHIRP field \texttt{synth\_frac}.  Figure \ref{fig10} shows the
-AIRS-parent CHIRP synthetic fraction for a single representative
-granule. This can be used to select channels with a relatively small
-synthetic component.  Figure \ref{fig11} show the AIRS-parent CHIRP
-synthetic fraction, sorted by synthetic fraction magnitude.  This
-shows the variability of \texttt{synth\_frac}.  If
+apply it to the AIRS field L1cNumSynth, to get a corresponding
+NumSynth value for CHIRP.  This is normalized as a fraction and
+becomes the CHIRP field \texttt{synth\_frac}.  Figure \ref{fig10}
+shows the AIRS-parent CHIRP synthetic fraction for a single
+representative granule. This can be used to select channels with a
+relatively small synthetic component.  Figure \ref{fig11} show the
+AIRS-parent CHIRP synthetic fraction, sorted by synthetic fraction
+magnitude.  This shows the variability of \texttt{synth\_frac}.  If
 $\hbox{\texttt{synth\_frac}} > 0.25$, we set \texttt{chan\_qc} to
 warn.
 
@@ -487,7 +494,7 @@ To find {\nedn} for AIRS-parent CHIRP, we start with an AIRS L1c
 values for {\nedn}.  As a compromise we take the mean of valid
 {\nedn} values over an AIRS granule and interpolate over the gaps
 for the synthetic channels.  Given the AIRS estimate, we add
-Gaussian noise at the AIRS {\nedn} to a black-body spectra at 280K,
+Gaussian noise at the AIRS {\nedn} to a black-body spectrum at 280K,
 do the translation, and measure the resulting noise.  This is done
 repeatedly and the mean of the measurement is reported.  Details are
 described in \cite{mott2018}.  The correlated fraction of AIRS noise
@@ -499,7 +506,7 @@ Figure \ref{fig12} shows typical values for AIRS and CrIS {\nedn}
 for 2018 doy 231 granules 25 and 21, respectively; two relatively
 warm granules.  Figure \ref{fig13} shows the corresponding CHIRP
 {\nedn} for AIRS and CrIS parent data, for the same granules.
-The noise is significantly less for the translation.  This to be
+The noise is significantly less for the translation.  This is to be
 expected since both apodization and down-interpolation reduce noise.
 
 \subsection{CrIS-parent CHIRP QC and NEdN}
@@ -530,7 +537,8 @@ GES-DIS for the series of CrIS instruments, starting with SNPP-CrIS and
 continued with the JPSS series of CrIS instruments.
 
 %----------- section --------------------------------------------------%
-\bibliographystyle{abbrv}
+% \bibliographystyle{abbrv}
+\bibliographystyle{habbrv}
 \bibliography{user_guide}
 
 \appendix
@@ -618,7 +626,8 @@ above) indicates the primary CHIRP product.
    9 & \texttt{product\_name\_version} & For example ``V02\_48'' for
    version 02.48 \\
    \hline
-   10 & \texttt{product\_name\_producer} & ``G'' for data produced by NASA GSFC\\
+   10 & \texttt{product\_name\_producer} & ``G'' for data produced
+   by NASA GSFC, ``U'' for undefined \\
    \hline
    11 & \texttt{product\_name\_timestamp} & Processing timestamp \\
    \hline
@@ -637,7 +646,7 @@ above) indicates the primary CHIRP product.
 }
 {\scriptsize
 \input{field_tables/chirp_1330_var_t.tex}
-\newpage  % this may need to move or be removed with reformats
+% \newpage  % this may need to move or be removed with reformats
 \input{field_tables/chirp_1330.attrs_t.tex}
 }
 
